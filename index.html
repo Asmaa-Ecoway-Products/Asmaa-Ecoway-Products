@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asmaa Ecoway Products</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#2d5a27',
+                            light: '#e8f3e8',
+                            gold: '#d4af37',
+                            accent: '#4c8c4a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'sans-serif'],
+                    },
+                    transitionTimingFunction: {
+                        'premium': 'cubic-bezier(0.25, 0.8, 0.25, 1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fbfbfb;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        /* Backgrounds */
+        .hero-bg-1 { background: linear-gradient(135deg, #e6eed8 0%, #fef8e6 100%); }
+        .hero-bg-2 { background: linear-gradient(135deg, #fce4ec 0%, #fef8e6 100%); }
+        .hero-bg-3 { background: linear-gradient(135deg, #fff8e1 0%, #e6eed8 100%); }
+        
+        .cat-home { background: linear-gradient(to bottom, #e3f2e1, #c5e1a5); }
+        .cat-skin { background: linear-gradient(to bottom, #fce4ec, #f8bbd0); }
+        .cat-perfume { background: linear-gradient(to bottom, #fff8e1, #ffecb3); }
+
+        .team-bg {
+            background: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url('https://www.transparenttextures.com/patterns/natural-paper.png');
+            background-color: #dcedc8;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #2d5a27; border-radius: 10px; }
+
+        /* Premium Micro-interactions */
+        .img-placeholder {
+            display: flex; align-items: center; justify-content: center;
+            background-color: rgba(255,255,255,0.6); color: #2d5a27;
+            font-weight: 600; text-align: center; padding: 1rem;
+        }
+
+        /* Slider Animations */
+        .slide-content {
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease;
+            transform: translateY(20px);
+            opacity: 0;
+        }
+        .slide.active .slide-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .slide-bg-img {
+            transition: transform 6s ease;
+            transform: scale(1);
+        }
+        .slide.active .slide-bg-img {
+            transform: scale(1.05);
+        }
+        
+        /* Cart Drawer Styles */
+        #cart-drawer {
+            transition: transform 0.3s ease-premium;
+        }
+        .cart-item {
+            transition: all 0.2s ease;
+        }
+        .cart-item:hover {
+            background-color: #f8faf8;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+
+
+    <!-- 2. Header & Navigation -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="text-2xl font-bold text-brand-dark flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-brand-accent rounded">
+                <i class="ph-fill ph-leaf text-brand-accent"></i>
+                Asmaa Ecoway Products
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-6 font-semibold text-gray-600">
+                <a href="/" class="text-brand-dark border-b-2 border-brand-dark pb-1">الرئيسية</a>
+                <a href="#categories" class="hover:text-brand-dark transition-colors duration-200">الأقسام</a>
+
+                <a href="application.html" class="hover:text-brand-dark transition-colors duration-200">انضمي لفريقنا</a>
+            </nav>
+
+            <!-- Icons -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart()" class="text-gray-600 hover:text-brand-dark transition-colors relative focus:outline-none" aria-label="السلة">
+                    <i class="ph ph-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
+                </button>
+                <!-- Mobile Menu Toggle -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-brand-dark transition-colors focus:outline-none" aria-label="القائمة">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-nav-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300" aria-hidden="true"></div>
+    <aside id="mobile-nav-drawer" class="fixed top-0 right-0 w-64 h-full bg-white z-50 transform translate-x-full transition-transform duration-300 ease-premium flex flex-col shadow-2xl" aria-expanded="false">
+        <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-brand-light">
+            <h2 class="text-xl font-bold text-brand-dark flex items-center gap-2">
+                <i class="ph-fill ph-leaf text-brand-accent"></i> القائمة
+            </h2>
+            <button id="close-mobile-nav" class="text-gray-500 hover:text-red-500 bg-white rounded-full p-1 shadow-sm transition-colors focus:outline-none">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto p-4 flex flex-col gap-4 font-semibold text-gray-700">
+            <a href="/" class="p-2 bg-brand-light text-brand-dark rounded-lg">الرئيسية</a>
+            <a href="#categories" class="p-2 hover:bg-gray-50 rounded-lg transition-colors mobile-link">الأقسام</a>
+            <a href="application.html" class="p-2 hover:bg-gray-50 rounded-lg transition-colors mobile-link">انضمي لفريقنا</a>
+            
+        </nav>
+    </aside>
+
+    <main>
+        <!-- 3. Premium Hero Slider Section - مع صور متجاوبة -->
+<section id="hero-slider" class="relative w-full min-h-[500px] md:aspect-[21/9] bg-gray-100 overflow-hidden group outline-none" tabindex="0">
+    <div id="slider-track" class="w-full h-full relative">
+        
+        <!-- Slide 1 -->
+        <div class="slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100 z-10 hero-bg-1 flex items-center active">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center h-full relative z-20 slide-content py-8">
+                <div class="md:w-1/2 text-center md:text-right mb-6 md:mb-0">
+                    <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-brand-dark leading-tight mb-4">
+                        كل ما تحتاجينه لبيتك وجمالك <br>
+                        <span class="text-brand-gold drop-shadow-sm">في مكان واحد</span>
+                    </h1>
+                    <p class="text-base md:text-lg text-gray-700 mb-8 max-w-md mx-auto md:mx-0">
+                        اكتشفي تشكيلتنا الواسعة من منتجات العناية بالمنزل، البشرة، وأرقى العطور والشنط.
+                    </p>
+                    <a href="fout el tanfeef.html" class="inline-flex bg-brand-dark hover:bg-brand-accent text-white px-8 py-3 rounded-full text-lg font-bold shadow-lg transition-all duration-300 ease-premium hover:-translate-y-1 items-center gap-2">
+                        تسوقي الآن <i class="ph-bold ph-caret-left"></i>
+                    </a>
+                </div>
+                
+                <!-- حاوية الصورة - متجاوبة مع أي مقاس -->
+                <div class="md:w-1/2 relative w-full flex items-center justify-center">
+                    <div class="w-full max-w-md rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-white/30 slide-bg-img flex items-center justify-center" style="min-height: 200px; max-height: 400px;">
+                        <img 
+                            src="8.jpeg" 
+                            alt="منتجات المنزل" 
+                            class="w-full h-full object-contain"
+                            style="max-height: 350px;"
+                            loading="lazy"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0 hero-bg-2 flex items-center">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center h-full relative z-20 slide-content py-8">
+                <div class="md:w-1/2 text-center md:text-right mb-6 md:mb-0">
+                    <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-pink-800 leading-tight mb-4">
+                        عناية فائقة ببشرتك <br>
+                        <span class="text-pink-600 drop-shadow-sm">إشراقة كل يوم</span>
+                    </h1>
+                    <p class="text-base md:text-lg text-gray-700 mb-8 max-w-md mx-auto md:mx-0">
+                        منتجات طبيعية 100% تمنحك النضارة والجمال الذي تستحقينه.
+                    </p>
+                    <a href="skin care.html" class="inline-flex bg-pink-700 hover:bg-pink-600 text-white px-8 py-3 rounded-full text-lg font-bold shadow-lg transition-all duration-300 ease-premium hover:-translate-y-1 items-center gap-2">
+                        اكتشفي المجموعة <i class="ph-bold ph-caret-left"></i>
+                    </a>
+                </div>
+                
+                <!-- حاوية الصورة - متجاوبة مع أي مقاس -->
+                <div class="md:w-1/2 relative w-full flex items-center justify-center">
+                    <div class="w-full max-w-md rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-white/30 slide-bg-img flex items-center justify-center" style="min-height: 200px; max-height: 400px;">
+                        <img 
+                            src="3.jpeg" 
+                            alt="منتجات العناية بالبشرة" 
+                            class="w-full h-full object-contain"
+                            style="max-height: 350px;"
+                            loading="lazy"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0 z-0 hero-bg-3 flex items-center">
+            <div class="container mx-auto px-4 flex flex-col md:flex-row items-center h-full relative z-20 slide-content py-8">
+                <div class="md:w-1/2 text-center md:text-right mb-6 md:mb-0">
+                    <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-yellow-800 leading-tight mb-4">
+                        الأناقة تكتمل <br>
+                        <span class="text-brand-gold drop-shadow-sm">بأرقى العطور والشنط</span>
+                    </h1>
+                    <p class="text-base md:text-lg text-gray-700 mb-8 max-w-md mx-auto md:mx-0">
+                        لمسة من الفخامة تضيف لجمالك سحراً خاصاً مع مجموعتنا الحصرية.
+                    </p>
+                    <a href="perfumes & bags.html" class="inline-flex bg-yellow-700 hover:bg-yellow-600 text-white px-8 py-3 rounded-full text-lg font-bold shadow-lg transition-all duration-300 ease-premium hover:-translate-y-1 items-center gap-2">
+                        تسوقي العطور <i class="ph-bold ph-caret-left"></i>
+                    </a>
+                </div>
+                
+                <!-- حاوية الصورة - متجاوبة مع أي مقاس -->
+                <div class="md:w-1/2 relative w-full flex items-center justify-center">
+                    <div class="w-full max-w-md rounded-2xl overflow-hidden border-4 border-white shadow-xl bg-white/30 slide-bg-img flex items-center justify-center" style="min-height: 200px; max-height: 400px;">
+                        <img 
+                            src="4.jpeg" 
+                            alt="عطور وشنط" 
+                            class="w-full h-full object-contain"
+                            style="max-height: 350px;"
+                            loading="lazy"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- باقي عناصر السلايدر (الأزرار والنقاط) زي ما هي -->
+    <div class="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-30">
+        <button id="slider-prev" class="pointer-events-auto bg-white/80 hover:bg-white text-brand-dark w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-md transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-brand-accent" aria-label="الشريحة السابقة">
+            <i class="ph-bold ph-caret-right text-xl"></i>
+        </button>
+        <button id="slider-next" class="pointer-events-auto bg-white/80 hover:bg-white text-brand-dark w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center shadow-md transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-brand-accent" aria-label="الشريحة التالية">
+            <i class="ph-bold ph-caret-left text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Slider Pagination Dots -->
+    <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-30" id="slider-dots"></div>
+</section>
+
+<!-- قسم الأقسام المطور - مع صور ثابتة الأبعاد -->
+<section id="categories" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <!-- شبكة الأقسام - 4 أعمدة في الديسكتوب، 2 في التابلت، 1 في الموبايل -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
+            <!-- القسم 1: البيت والمطبخ -->
+            <a href="fout el tanfeef.html" class="block cat-home rounded-2xl p-5 md:p-6 text-center shadow-md border border-green-100 relative overflow-hidden group transition-all duration-500 ease-premium hover:-translate-y-2 hover:shadow-xl cursor-pointer outline-none focus:ring-4 focus:ring-green-300 h-full flex flex-col">
+                <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md mb-3 relative z-10 transition-transform duration-300 group-hover:scale-105">فوط التنظيف</h3>
+                
+                <!-- صورة ثابتة الأبعاد -->
+                <div class="relative w-full mb-4 overflow-hidden rounded-xl" style="padding-bottom: 75%;"> <!-- نسبة عرض:ارتفاع 4:3 -->
+                    <img 
+                        src="2.jpeg" 
+                        alt="فوط التنظيف"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                    >
+                </div>
+                
+                <div class="bg-white/90 text-brand-dark font-bold py-2 px-4 md:px-6 rounded-full transition-all duration-300 ease-premium relative z-10 shadow-sm flex items-center justify-center gap-1 md:gap-2 mx-auto w-4/5 group-hover:bg-white group-hover:shadow-md group-hover:-translate-y-1 text-sm md:text-base mt-auto">
+                    تسوقي الآن <i class="ph-bold ph-caret-left text-sm md:text-base"></i>
+                </div>
+            </a>
+            
+            <!-- القسم 2: تنظيف البشرة -->
+            <a href="skin care.html" class="block cat-skin rounded-2xl p-5 md:p-6 text-center shadow-md border border-pink-100 relative overflow-hidden group transition-all duration-500 ease-premium hover:-translate-y-2 hover:shadow-xl cursor-pointer outline-none focus:ring-4 focus:ring-pink-300 h-full flex flex-col">
+                <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md mb-3 relative z-10 transition-transform duration-300 group-hover:scale-105">تنظيف البشرة</h3>
+                
+                <!-- صورة ثابتة الأبعاد -->
+                <div class="relative w-full mb-4 overflow-hidden rounded-xl" style="padding-bottom: 75%;">
+                    <img 
+                        src="3.jpeg" 
+                        alt="منتجات تنظيف البشرة"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                    >
+                </div>
+                
+                <div class="bg-white/90 text-pink-700 font-bold py-2 px-4 md:px-6 rounded-full transition-all duration-300 ease-premium relative z-10 shadow-sm flex items-center justify-center gap-1 md:gap-2 mx-auto w-4/5 group-hover:bg-white group-hover:shadow-md group-hover:-translate-y-1 text-sm md:text-base mt-auto">
+                    تسوقي الآن <i class="ph-bold ph-caret-left text-sm md:text-base"></i>
+                </div>
+            </a>
+            
+            <!-- القسم 3: شنط وعطور -->
+            <a href="perfumes & bags.html" class="block cat-perfume rounded-2xl p-5 md:p-6 text-center shadow-md border border-yellow-100 relative overflow-hidden group transition-all duration-500 ease-premium hover:-translate-y-2 hover:shadow-xl cursor-pointer outline-none focus:ring-4 focus:ring-yellow-300 h-full flex flex-col">
+                <h3 class="text-xl md:text-2xl font-bold text-white drop-shadow-md mb-3 relative z-10 transition-transform duration-300 group-hover:scale-105">شنط وعطور</h3>
+                
+                <!-- صورة ثابتة الأبعاد -->
+                <div class="relative w-full mb-4 overflow-hidden rounded-xl" style="padding-bottom: 75%;">
+                    <img 
+                        src="4.jpeg" 
+                        alt="شنط وعطور"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                    >
+                </div>
+                
+                <div class="bg-white/90 text-yellow-700 font-bold py-2 px-4 md:px-6 rounded-full transition-all duration-300 ease-premium relative z-10 shadow-sm flex items-center justify-center gap-1 md:gap-2 mx-auto w-4/5 group-hover:bg-white group-hover:shadow-md group-hover:-translate-y-1 text-sm md:text-base mt-auto">
+                    تسوقي الآن <i class="ph-bold ph-caret-left text-sm md:text-base"></i>
+                </div>
+            </a>
+            
+            <!-- القسم 4: منظفات طبيعية وصابون (جديد) -->
+            <a href="natural products & soap.html" class="block bg-gradient-to-b from-green-100 to-green-50 rounded-2xl p-5 md:p-6 text-center shadow-md border border-green-100 relative overflow-hidden group transition-all duration-500 ease-premium hover:-translate-y-2 hover:shadow-xl cursor-pointer outline-none focus:ring-4 focus:ring-green-300 h-full flex flex-col">
+                <h3 class="text-xl md:text-2xl font-bold text-green-800 drop-shadow-md mb-3 relative z-10 transition-transform duration-300 group-hover:scale-105">منظفات طبيعية وصابون</h3>
+                
+                <!-- صورة ثابتة الأبعاد -->
+                <div class="relative w-full mb-4 overflow-hidden rounded-xl" style="padding-bottom: 75%;">
+                    <img 
+                        src="5.jpeg" 
+                        alt="منظفات طبيعية وصابون"
+                        class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        loading="lazy"
+                    >
+                </div>
+                
+                <div class="bg-white/90 text-green-700 font-bold py-2 px-4 md:px-6 rounded-full transition-all duration-300 ease-premium relative z-10 shadow-sm flex items-center justify-center gap-1 md:gap-2 mx-auto w-4/5 group-hover:bg-white group-hover:shadow-md group-hover:-translate-y-1 text-sm md:text-base mt-auto">
+                    تسوقي الآن <i class="ph-bold ph-caret-left text-sm md:text-base"></i>
+                </div>
+            </a>
+        </div>
+        
+        <!-- زر باكدجات المميز أسفل الأقسام -->
+        <div class="flex justify-center mt-10 md:mt-12 lg:mt-14">
+            <a href="/packages" class="inline-flex items-center justify-center gap-2 md:gap-3 bg-gradient-to-l from-brand-dark to-brand-accent text-white px-6 md:px-8 lg:px-10 py-3 md:py-3.5 lg:py-4 rounded-full font-bold text-base md:text-lg lg:text-xl shadow-lg transition-all duration-500 ease-premium hover:-translate-y-2 hover:shadow-2xl hover:from-brand-accent hover:to-brand-dark focus:outline-none focus:ring-4 focus:ring-brand-light group">
+                <i class="ph-fill ph-package text-xl md:text-2xl lg:text-3xl transition-transform duration-300 group-hover:rotate-6"></i>
+                <span>باكدجات</span>
+                <i class="ph-bold ph-arrow-left text-xl md:text-2xl lg:text-3xl transition-transform duration-300 group-hover:-translate-x-1"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+        <!-- 5. Featured Products (منتجات مميزة) -->
+        <section id="featured" class="py-16 bg-[#f9fdf9]">
+            <div class="container mx-auto px-4">
+                
+                <div class="flex items-center justify-center gap-4 mb-10">
+                    <div class="h-px bg-gray-300 w-16 md:w-32"></div>
+                    <h2 class="text-3xl font-bold text-brand-dark">منتجات مميزة</h2>
+                    <div class="h-px bg-gray-300 w-16 md:w-32"></div>
+                </div>
+
+                <!-- Product Grid -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6" id="products-container">
+                    <!-- Products will be injected via JS -->
+                </div>
+
+                <!-- Premium CTA Button Below Grid -->
+                <div class="mt-12 text-center">
+                    <a href="/all-products" class="inline-flex items-center justify-center gap-2 bg-white text-brand-dark border-2 border-brand-dark px-10 py-3 rounded-full font-bold text-lg shadow-md transition-all duration-300 ease-premium hover:-translate-y-1 hover:bg-brand-dark hover:text-white hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-brand-light">
+                        للمزيد من المنتجات
+                        <i class="ph-bold ph-arrow-left transition-transform group-hover:-translate-x-1"></i>
+                    </a>
+                </div>
+            </div>
+<!-- 6. Join the Team Redirect Promo - مع صورة -->
+<section class="py-12 px-4">
+    <div class="container mx-auto team-bg rounded-3xl shadow-lg border border-green-200 p-8 md:p-12 flex flex-col md:flex-row items-center justify-between relative overflow-hidden">
+        
+        <!-- الصورة المستطيلة (يسار في الكمبيوتر، فوق في الموبايل) -->
+        <div class="w-full md:w-1/3 mb-6 md:mb-0 md:order-2">
+            <img 
+                src="7.jpeg" 
+                alt="انضمي لفريق أسماء محمد" 
+                class="w-full h-auto rounded-xl shadow-lg border-4 border-white"
+                style="max-height: 260px; object-fit: cover;"
+            >
+        </div>
+        
+        <!-- النص (يمين في الكمبيوتر، تحت في الموبايل) -->
+        <div class="md:w-2/3 relative z-10 text-center md:text-right md:order-1">
+            <h2 class="text-3xl md:text-4xl font-bold text-brand-dark mb-3 flex items-center justify-center md:justify-start gap-3">
+                <i class="ph-fill ph-leaf text-brand-accent"></i>
+                انضمي لفريق أسماء محمد
+            </h2>
+            <p class="text-lg text-gray-700 mb-6">فرصة حقيقية للنجاح والربح مع فريقنا المميز! ابدئي مشروعك الخاص الآن.</p>
+            <a href="application.html" class="inline-flex bg-brand-dark hover:bg-brand-accent text-white px-8 py-3 rounded-xl font-bold text-lg shadow-md transition-all duration-300 ease-premium hover:-translate-y-1 items-center gap-2 mx-auto md:mx-0">
+                سجلي الآن
+                <i class="ph-bold ph-caret-left"></i>
+            </a>
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- 7. Footer -->
+    <footer class="bg-gradient-to-b from-white to-gray-50 border-t border-gray-200 pt-12 pb-4 relative overflow-hidden">
+        <!-- Decorative subtle leaf pattern -->
+        <div class="absolute inset-0 opacity-5 pointer-events-none">
+            <i class="ph-fill ph-leaf absolute top-10 right-10 text-7xl text-brand-dark rotate-12"></i>
+            <i class="ph-fill ph-plant absolute bottom-10 left-10 text-8xl text-brand-accent -rotate-12"></i>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <!-- Main footer grid: 4 columns on desktop, stacked on mobile -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10">
+                <!-- Column 1: Brand & bio -->
+                <div class="text-center sm:text-right">
+                    <a href="/" class="inline-flex items-center justify-center sm:justify-start gap-2 text-2xl font-bold text-brand-dark mb-4">
+                        <i class="ph-fill ph-leaf text-3xl text-brand-accent"></i>
+                        <span>AsmaaEco</span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-4 max-w-xs mx-auto sm:mx-0">
+                        متجرك الأول لكل ما يخص جمالك وعنايتك بمنزلك. منتجات موثوقة وجودة عالية مع ضمان الoriginal.
+                    </p>
+                    <div class="flex gap-3 justify-center sm:justify-start">
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-light flex items-center justify-center text-brand-dark hover:bg-brand-dark hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-sm"><i class="ph-fill ph-facebook-logo text-lg"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-light flex items-center justify-center text-brand-dark hover:bg-brand-dark hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-sm"><i class="ph-fill ph-instagram-logo text-lg"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-light flex items-center justify-center text-brand-dark hover:bg-brand-dark hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-sm"><i class="ph-fill ph-whatsapp-logo text-lg"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-brand-light flex items-center justify-center text-brand-dark hover:bg-brand-dark hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-sm"><i class="ph-fill ph-tiktok-logo text-lg"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Column 2: Quick links -->
+                <div class="text-center sm:text-right">
+                    <h4 class="font-extrabold text-gray-800 mb-4 text-lg border-b-2 border-brand-light pb-2 inline-block">روابط سريعة</h4>
+                    <ul class="space-y-3 text-gray-600 text-sm">
+                        <li><a href="/" class="hover:text-brand-dark transition-colors flex items-center gap-2 justify-center sm:justify-start"><i class="ph ph-caret-left text-brand-accent"></i> الرئيسية</a></li>
+                        <li><a href="#categories" class="hover:text-brand-dark transition-colors flex items-center gap-2 justify-center sm:justify-start"><i class="ph ph-caret-left text-brand-accent"></i> الأقسام</a></li>
+                        <li><a href="/about" class="hover:text-brand-dark transition-colors flex items-center gap-2 justify-center sm:justify-start"><i class="ph ph-caret-left text-brand-accent"></i> من نحن</a></li>
+                        <li><a href="/contact" class="hover:text-brand-dark transition-colors flex items-center gap-2 justify-center sm:justify-start"><i class="ph ph-caret-left text-brand-accent"></i> تواصل معنا</a></li>
+                    </ul>
+                </div>
+                
+
+            
+            <!-- Bottom bar with copyright and developer credit -->
+            <div class="border-t border-gray-200 pt-6 mt-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
+                <div>© 2024 متجر Asmaa Ecoway Products. جميع الحقوق محفوظة.</div>
+                <div class="flex items-center gap-1 bg-brand-light/50 px-3 py-1.5 rounded-full">
+                    <span class="text-gray-600">تم إنشاء الموقع بواسطة</span>
+                    <a href="https://mina-samuel-2010.github.io/Mina_Samuel/index.html" target="_blank" rel="noopener" class="font-bold text-brand-dark hover:text-brand-accent transition-colors underline underline-offset-2">
+                        مينا صموئيل
+                    </a>
+                    <i class="ph-fill ph-code text-brand-accent mr-1"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Drawer -->
+    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full sm:w-96 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-premium z-50 flex flex-col" aria-expanded="false">
+        <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-brand-light">
+            <h2 class="text-xl font-bold text-brand-dark flex items-center gap-2">
+                <i class="ph ph-shopping-cart text-2xl"></i> سلة المشتريات
+            </h2>
+            <button onclick="closeCart()" class="text-gray-500 hover:text-red-500 bg-white rounded-full p-1 shadow-sm transition-colors focus:outline-none">
+                <i class="ph ph-x text-xl"></i>
+            </button>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3" id="cart-items">
+            <!-- Injected via JS -->
+            <div class="text-center text-gray-400 mt-10">السلة فارغة حالياً</div>
+        </div>
+
+        <!-- Upsell Section -->
+        <div id="upsell-section" class="p-4 bg-green-50 border-t border-green-100 hidden transition-opacity duration-300">
+            <h4 class="text-sm font-bold text-brand-dark mb-2 flex items-center gap-1"><i class="ph-fill ph-sparkle"></i> قد يعجبك أيضاً (أكملي مجموعتك)</h4>
+            <div class="flex items-center gap-3 bg-white p-2 rounded-lg shadow-sm border border-gray-100">
+                <div class="w-12 h-12 bg-gray-100 rounded img-placeholder text-[8px] p-0">صورة</div>
+                <div class="flex-1">
+                    <h5 class="text-xs font-bold text-gray-800">صابون طبيعي للبشرة</h5>
+                    <span class="text-xs text-brand-accent font-bold">25 جنيه</span>
+                </div>
+                <button onclick="addUpsellItem()" class="bg-brand-dark text-white text-xs px-3 py-1.5 rounded hover:bg-brand-accent transition-colors focus:outline-none">إضافة</button>
+            </div>
+        </div>
+
+        <div class="p-4 border-t border-gray-100 bg-white">
+            <div class="flex justify-between items-center mb-4 text-lg font-bold">
+                <span>الإجمالي:</span>
+                <span id="cart-total" class="text-brand-dark">0 جنيه</span>
+            </div>
+            <button onclick="checkout()" class="block text-center w-full bg-brand-dark text-white py-3 rounded-xl font-bold hover:bg-brand-accent transition-all duration-300 hover:-translate-y-1 shadow-md">
+                إتمام الطلب
+            </button>
+        </div>
+    </div>
+    
+    <!-- Cart Overlay -->
+    <div id="cart-overlay" onclick="closeCart()" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0" aria-hidden="true"></div>
+
+    <!-- Customer Subscription Modal -->
+    <div id="login-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div class="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl relative transform scale-95 transition-transform duration-300 modal-content">
+            <button onclick="closeLoginModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-800 transition-colors focus:outline-none"><i class="ph ph-x text-2xl"></i></button>
+            <div class="bg-brand-light p-6 text-center border-b border-gray-100">
+                <h3 class="text-2xl font-bold text-brand-dark mb-1">مرحباً بكِ في Asmaa Ecoway </h3>
+
+            </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== إدارة السلة المشتركة ====================
+        
+        // مفتاح التخزين في localStorage
+        const CART_STORAGE_KEY = 'asmaaEcoCart';
+        
+        // السلة الحالية (مصفوفة من المنتجات)
+        let cart = [];
+
+        // ==================== دوال السلة ====================
+        
+        // تحميل السلة من localStorage
+        function loadCart() {
+            try {
+                const savedCart = localStorage.getItem(CART_STORAGE_KEY);
+                cart = savedCart ? JSON.parse(savedCart) : [];
+            } catch (e) {
+                cart = [];
+            }
+            updateCartUI();
+            updateProductsUI(); // تحديث المنتجات المميزة لعرض حالة السلة
+        }
+
+        // حفظ السلة في localStorage وإرسال حدث للتحديث
+        function saveCart() {
+            localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+            // إرسال حدث مخصص لإعلام الصفحات الأخرى
+            window.dispatchEvent(new CustomEvent('cartUpdated', { detail: cart }));
+            updateCartUI();
+        }
+
+        // إضافة منتج إلى السلة
+        function addToCart(product) {
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity = (existingItem.quantity || 1) + 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            saveCart();
+            openCart(); // فتح السلة بعد الإضافة
+        }
+
+        // إزالة منتج من السلة
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+        }
+
+        // تغيير كمية منتج
+        function updateQuantity(index, delta) {
+            if (index >= 0 && index < cart.length) {
+                const item = cart[index];
+                const newQuantity = (item.quantity || 1) + delta;
+                
+                if (newQuantity <= 0) {
+                    removeFromCart(index);
+                } else {
+                    item.quantity = newQuantity;
+                    saveCart();
+                }
+            }
+        }
+
+        // إضافة منتج الـ upsell
+        function addUpsellItem() {
+            addToCart({
+                id: 99,
+                name: 'صابون طبيعي للبشرة',
+                price: 25,
+                category: 'skin'
+            });
+            document.getElementById('upsell-section').classList.add('hidden');
+        }
+
+        // حساب الإجمالي
+        function calculateTotal() {
+            return cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+        }
+
+        // تحديث واجهة السلة والعداد
+        function updateCartUI() {
+            // تحديث عداد السلة
+            const countBadge = document.getElementById('cart-count');
+            if (countBadge) {
+                const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+                countBadge.innerText = totalItems;
+            }
+
+            // تحديث محتوى السلة
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (!cartItemsContainer) return;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="text-center text-gray-400 mt-10 py-8">السلة فارغة حالياً</div>';
+                if (cartTotal) cartTotal.innerText = '0 جنيه';
+                document.getElementById('upsell-section').classList.add('hidden');
+                return;
+            }
+
+            // عرض الـ upsell إذا كان فيه منتجات معينة
+            const hasHomeOrSkin = cart.some(item => item.category === 'home' || item.category === 'skin');
+            if (hasHomeOrSkin && !cart.some(item => item.id === 99)) {
+                document.getElementById('upsell-section').classList.remove('hidden');
+            } else {
+                document.getElementById('upsell-section').classList.add('hidden');
+            }
+
+            let itemsHtml = '';
+            cart.forEach((item, index) => {
+                itemsHtml += `
+                    <div class="cart-item bg-gray-50 p-3 rounded-lg border border-gray-100 hover:border-brand-light transition-all">
+                        <div class="flex items-start gap-3">
+                            <div class="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center text-brand-dark shrink-0">
+                                <i class="ph-fill ph-package text-xl"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-bold text-gray-800 text-sm mb-1">${item.name}</h4>
+                                <div class="flex items-center justify-between mt-2">
+                                    <div class="flex items-center gap-2">
+                                        <button onclick="updateQuantity(${index}, -1)" class="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:border-red-500 hover:text-red-500 transition-colors">
+                                            <i class="ph ph-minus text-xs"></i>
+                                        </button>
+                                        <span class="text-sm font-bold w-5 text-center">${item.quantity || 1}</span>
+                                        <button onclick="updateQuantity(${index}, 1)" class="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:border-green-500 hover:text-green-500 transition-colors">
+                                            <i class="ph ph-plus text-xs"></i>
+                                        </button>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-bold text-brand-dark">${item.price * (item.quantity || 1)} جنيه</span>
+                                        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 transition-colors p-1">
+                                            <i class="ph ph-trash text-base"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            cartItemsContainer.innerHTML = itemsHtml;
+            if (cartTotal) cartTotal.innerText = calculateTotal() + ' جنيه';
+        }
+
+        // ==================== دوال السلة (فتح/غلق) ====================
+        
+        function openCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            
+            if (drawer && overlay) {
+                drawer.classList.remove('-translate-x-full');
+                drawer.setAttribute('aria-expanded', 'true');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            
+            if (drawer && overlay) {
+                drawer.classList.add('-translate-x-full');
+                drawer.setAttribute('aria-expanded', 'false');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300);
+                document.body.style.overflow = '';
+            }
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const isOpen = drawer && !drawer.classList.contains('-translate-x-full');
+            
+            if (isOpen) {
+                closeCart();
+            } else {
+                openCart();
+            }
+        }
+
+        // ==================== دوال المودالات ====================
+        
+        function openLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const content = modal.querySelector('.modal-content');
+            modal.classList.remove('hidden', 'pointer-events-none');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                if(content) content.classList.remove('scale-95');
+            }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            const content = modal.querySelector('.modal-content');
+            modal.classList.add('opacity-0');
+            if(content) content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden', 'pointer-events-none');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        // ==================== منتجات مميزة ====================
+        
+const featuredProducts = [
+    { id: 1, name: 'مزيل الدهون', price: 50, imgDesc: 'prod/1.jpeg', category: 'home', slug: 'fat-remover' },
+    { id: 2, name: 'معطر الجسم', price: 100, imgDesc: '3.jpeg', category: 'skin', slug: 'body-mist' },
+    { id: 3, name: 'منديل المايكروفايبر', price: 75, imgDesc: '2.jpeg', category: 'home', slug: 'microfiber' },
+    { id: 4, name: 'شنطة يد', price: 150, imgDesc: '4.jpeg', category: 'bags', slug: 'handbag' }
+];
+
+        function updateProductsUI() {
+            const container = document.getElementById('products-container');
+            if (!container) return;
+            
+            container.innerHTML = featuredProducts.map(product => `
+                <div class="product-card bg-white rounded-2xl p-3 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 ease-premium hover:-translate-y-2 flex flex-col h-full cursor-pointer group relative">
+                    
+                    <!-- Product Image -->
+                    <div class="product-img-wrapper h-40 bg-gray-50 rounded-xl mb-4 overflow-hidden img-placeholder text-sm px-2 transition-transform duration-300 group-hover:scale-105">
+                        ${product.imgDesc}
+                    </div>
+                    
+                    <div class="text-center flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-gray-800 mb-1 group-hover:text-brand-accent transition-colors">${product.name}</h3>
+                            <div class="text-gray-500 text-sm mb-3">⭐⭐⭐⭐⭐ (4.9)</div>
+                        </div>
+                        <div>
+                            <div class="text-xl font-bold text-brand-dark mb-3">${product.price} جنيه</div>
+                            
+                            <button onclick="addToCart({id: ${product.id}, name: '${product.name}', price: ${product.price}, category: '${product.category}'})" class="w-full bg-brand-dark text-white py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-brand-accent transition-colors shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-dark">
+                                <i class="ph-bold ph-shopping-bag"></i> اطلب الآن
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ==================== دوال إضافية ====================
+        
+function checkout() {
+
+    
+    // التوجيه إلى صفحة إتمام الطلب
+    window.location.href = 'checkout.html';
+}
+
+        // ==================== السلايدر (من الكود الأصلي) ====================
+        
+        const Slider = {
+            currentIdx: 0,
+            slides: [],
+            dots: [],
+            intervalId: null,
+            timerDelay: 3000,
+            container: null,
+            touchStartX: 0,
+            
+            init() {
+                this.container = document.getElementById('hero-slider');
+                if (!this.container) return;
+
+                this.slides = Array.from(document.querySelectorAll('.slide'));
+                this.buildDots();
+                this.updateDOM();
+                this.startAutoSlide();
+                this.bindEvents();
+            },
+
+            buildDots() {
+                const dotsContainer = document.getElementById('slider-dots');
+                if (!dotsContainer) return;
+                dotsContainer.innerHTML = '';
+                this.slides.forEach((_, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `w-3 h-3 rounded-full transition-all duration-300 focus:outline-none ${idx === 0 ? 'bg-brand-dark w-8' : 'bg-gray-400 hover:bg-brand-accent'}`;
+                    dot.setAttribute('aria-label', `انتقل للشريحة ${idx + 1}`);
+                    dot.addEventListener('click', () => this.goToSlide(idx));
+                    this.dots.push(dot);
+                    dotsContainer.appendChild(dot);
+                });
+            },
+
+            updateDOM() {
+                this.slides.forEach((slide, idx) => {
+                    if (idx === this.currentIdx) {
+                        slide.classList.remove('opacity-0', 'z-0');
+                        slide.classList.add('opacity-100', 'z-10', 'active');
+                    } else {
+                        slide.classList.remove('opacity-100', 'z-10', 'active');
+                        slide.classList.add('opacity-0', 'z-0');
+                    }
+                });
+
+                this.dots.forEach((dot, idx) => {
+                    if (idx === this.currentIdx) {
+                        dot.classList.replace('bg-gray-400', 'bg-brand-dark');
+                        dot.classList.add('w-8');
+                        dot.classList.remove('hover:bg-brand-accent');
+                    } else {
+                        dot.classList.replace('bg-brand-dark', 'bg-gray-400');
+                        dot.classList.remove('w-8');
+                        dot.classList.add('hover:bg-brand-accent');
+                    }
+                });
+            },
+
+            next() {
+                this.currentIdx = (this.currentIdx + 1) % this.slides.length;
+                this.updateDOM();
+            },
+
+            prev() {
+                this.currentIdx = (this.currentIdx - 1 + this.slides.length) % this.slides.length;
+                this.updateDOM();
+            },
+
+            goToSlide(idx) {
+                this.currentIdx = idx;
+                this.updateDOM();
+                this.resetAutoSlide();
+            },
+
+            startAutoSlide() {
+                this.intervalId = setInterval(() => this.next(), this.timerDelay);
+            },
+
+            stopAutoSlide() {
+                clearInterval(this.intervalId);
+            },
+
+            resetAutoSlide() {
+                this.stopAutoSlide();
+                this.startAutoSlide();
+            },
+
+            bindEvents() {
+                this.container.addEventListener('mouseenter', () => this.stopAutoSlide());
+                this.container.addEventListener('mouseleave', () => this.startAutoSlide());
+
+                document.getElementById('slider-next')?.addEventListener('click', () => {
+                    this.next(); this.resetAutoSlide();
+                });
+                document.getElementById('slider-prev')?.addEventListener('click', () => {
+                    this.prev(); this.resetAutoSlide();
+                });
+
+                this.container.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') {
+                        this.next(); this.resetAutoSlide();
+                    } else if (e.key === 'ArrowRight') {
+                        this.prev(); this.resetAutoSlide();
+                    }
+                });
+
+                this.container.addEventListener('touchstart', (e) => {
+                    this.touchStartX = e.changedTouches[0].screenX;
+                    this.stopAutoSlide();
+                }, { passive: true });
+
+                this.container.addEventListener('touchend', (e) => {
+                    const touchEndX = e.changedTouches[0].screenX;
+                    this.handleSwipe(this.touchStartX, touchEndX);
+                    this.startAutoSlide();
+                }, { passive: true });
+            },
+
+            handleSwipe(startX, endX) {
+                const threshold = 50;
+                if (startX - endX > threshold) {
+                    this.next();
+                } else if (endX - startX > threshold) {
+                    this.prev();
+                }
+            }
+        };
+
+        // ==================== موبايل ناف ====================
+        
+        function initMobileNav() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-mobile-nav');
+            const overlay = document.getElementById('mobile-nav-overlay');
+            const drawer = document.getElementById('mobile-nav-drawer');
+            const links = document.querySelectorAll('.mobile-link');
+
+            if (menuBtn) {
+                menuBtn.addEventListener('click', () => {
+                    drawer.classList.remove('translate-x-full');
+                    drawer.setAttribute('aria-expanded', 'true');
+                    overlay.classList.remove('hidden');
+                    setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeMobileNav);
+            }
+
+            if (overlay) {
+                overlay.addEventListener('click', closeMobileNav);
+            }
+
+            links.forEach(link => {
+                link.addEventListener('click', closeMobileNav);
+            });
+
+            function closeMobileNav() {
+                drawer.classList.add('translate-x-full');
+                drawer.setAttribute('aria-expanded', 'false');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+                document.body.style.overflow = '';
+            }
+        }
+
+        // ==================== التايمر ====================
+        
+        function startTimer() {
+            let time = 12 * 60 * 60;
+            const el = document.getElementById('countdown');
+            if(!el) return;
+            
+            setInterval(() => {
+                if(time <= 0) return;
+                let h = Math.floor(time / 3600);
+                let m = Math.floor((time % 3600) / 60);
+                let s = time % 60;
+                el.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                time--;
+            }, 1000);
+        }
+
+        // ==================== الاستماع للأحداث ====================
+        
+        window.addEventListener('storage', (e) => {
+            if (e.key === CART_STORAGE_KEY) {
+                loadCart();
+            }
+        });
+
+        window.addEventListener('cartUpdated', (e) => {
+            cart = e.detail;
+            updateCartUI();
+        });
+
+        // ==================== بدء التشغيل ====================
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCart();
+            updateProductsUI();
+            Slider.init();
+            initMobileNav();
+            startTimer();
+            
+            // Close on ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeCart();
+                    closeLoginModal();
+                    // Close mobile nav if open
+                    const drawer = document.getElementById('mobile-nav-drawer');
+                    if (drawer && !drawer.classList.contains('-translate-x-full')) {
+                        document.getElementById('close-mobile-nav')?.click();
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
