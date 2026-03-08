@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+    <title>منتج بألوان متعددة - Asmaa Ecoway Products</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -31,6 +31,9 @@
                     fontFamily: {
                         sans: ['Cairo', 'sans-serif'],
                     },
+                    transitionTimingFunction: {
+                        'premium': 'cubic-bezier(0.25, 0.8, 0.25, 1)',
+                    }
                 }
             }
         }
@@ -39,8 +42,11 @@
     <style>
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: #fbfbfb;
+            background: linear-gradient(135deg, #f8faf8 0%, #f0f7f0 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
         }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #2d5a27; border-radius: 10px; }
@@ -109,7 +115,13 @@
             margin-top: 1rem;
             overflow-x: auto;
             padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: #2d5a27 #e8f3e8;
         }
+        .thumbnail-container::-webkit-scrollbar { height: 6px; }
+        .thumbnail-container::-webkit-scrollbar-track { background: #e8f3e8; border-radius: 10px; }
+        .thumbnail-container::-webkit-scrollbar-thumb { background: #2d5a27; border-radius: 10px; }
+
         .thumbnail {
             width: 80px;
             height: 80px;
@@ -123,6 +135,7 @@
         }
         .thumbnail:hover {
             border-color: #4c8c4a;
+            opacity: 0.9;
             transform: scale(1.05);
         }
         .thumbnail.active {
@@ -144,7 +157,7 @@
         }
 
         /* Cart Drawer Styles */
-        #cart-drawer { transition: transform 0.3s ease; }
+        #cart-drawer { transition: transform 0.3s ease-premium; }
         .cart-item { transition: all 0.2s ease; }
         .cart-item:hover { background-color: #f8faf8; }
 
@@ -153,9 +166,10 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            width: 44px;
-            height: 44px;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -164,17 +178,21 @@
             transition: all 0.2s ease;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             color: #2d5a27;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            border: 1px solid rgba(255,255,255,0.5);
             z-index: 10;
-            border: 1px solid rgba(255,255,255,0.8);
         }
         .image-nav-btn:hover {
             background-color: white;
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
         }
-        .image-nav-btn.next { right: 15px; }
-        .image-nav-btn.prev { left: 15px; }
+        .image-nav-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+        .image-nav-btn.next { right: 10px; }
+        .image-nav-btn.prev { left: 10px; }
 
         /* فيديو */
         .video-container {
@@ -192,6 +210,37 @@
             height: 100%;
             border: none;
         }
+
+        /* تنسيقات الوصف */
+        .product-description-content {
+            line-height: 1.8;
+        }
+        .product-description-content ul {
+            list-style-type: disc;
+            padding-right: 1.5rem;
+            margin: 0.75rem 0;
+        }
+        .product-description-content li {
+            margin-bottom: 0.5rem;
+        }
+        .product-description-content .emoji {
+            font-size: 1.2em;
+            margin-left: 0.25rem;
+        }
+        .product-description-content p {
+            margin-bottom: 0.75rem;
+        }
+
+        /* مؤشر اللون في السلة */
+        .color-indicator {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-left: 4px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -199,15 +248,14 @@
     <!-- الهيدر -->
     <header class="bg-white shadow-sm sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-brand-dark flex items-center gap-2">
+            <a href="index.html" class="text-2xl font-bold text-brand-dark flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-brand-accent rounded">
                 <i class="ph-fill ph-leaf text-brand-accent"></i>
                 Asmaa Ecoway Products
             </a>
             <nav class="hidden md:flex items-center gap-6 font-semibold text-gray-600">
-                <a href="index.html" class="hover:text-brand-dark transition-colors">الرئيسية</a>
-                <a href="index.html#categories" class="hover:text-brand-dark">الأقسام</a>
-                <a href="more.html" class="hover:text-brand-dark">منتجاتنا</a>
-                <a href="#" class="hover:text-brand-dark">انضمي لفريقنا</a>
+                <a href="/" class="text-brand-dark border-b-2 border-brand-dark pb-1">الرئيسية</a>
+                <a href="#categories" class="hover:text-brand-dark transition-colors duration-200">الأقسام</a>
+                <a href="application.html" class="hover:text-brand-dark transition-colors duration-200">انضمي لفريقنا</a>
             </nav>
             <div class="flex items-center gap-4">
                 <button onclick="openLoginModal()" class="text-gray-600 hover:text-brand-dark transition-colors flex items-center gap-1">
@@ -227,36 +275,52 @@
 
     <!-- موبايل ناف -->
     <div id="mobile-nav-overlay" class="fixed inset-0 bg-black/50 z-50 hidden opacity-0 transition-opacity duration-300"></div>
-    <aside id="mobile-nav-drawer" class="fixed top-0 right-0 w-64 h-full bg-white z-50 transform translate-x-full transition-transform duration-300 ease shadow-2xl">
+    <aside id="mobile-nav-drawer" class="fixed top-0 right-0 w-64 h-full bg-white z-50 transform translate-x-full transition-transform duration-300 ease-premium shadow-2xl">
         <div class="p-4 border-b border-gray-100 flex justify-between bg-brand-light">
             <h2 class="text-xl font-bold text-brand-dark flex items-center gap-2"><i class="ph-fill ph-leaf"></i> القائمة</h2>
             <button id="close-mobile-nav" class="text-gray-500 hover:text-red-500"><i class="ph ph-x text-xl"></i></button>
         </div>
         <nav class="p-4 flex flex-col gap-4 font-semibold">
-            <a href="index.html" class="p-2 hover:bg-gray-50 rounded">الرئيسية</a>
-            <a href="more.html" class="p-2 hover:bg-gray-50 rounded">منتجاتنا</a>
-            <a href="#" class="p-2 hover:bg-gray-50 rounded">انضمي لفريقنا</a>
+                <a href="/" class="text-brand-dark border-b-2 border-brand-dark pb-1">الرئيسية</a>
+                <a href="#categories" class="hover:text-brand-dark transition-colors duration-200">الأقسام</a>
+                <a href="application.html" class="hover:text-brand-dark transition-colors duration-200">انضمي لفريقنا</a>
         </nav>
     </aside>
 
     <!-- سلة المشتريات -->
-    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full sm:w-96 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease z-50 flex flex-col">
+    <div id="cart-drawer" class="fixed inset-y-0 left-0 w-full sm:w-96 bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-premium z-50 flex flex-col">
         <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-brand-light">
             <h2 class="text-xl font-bold text-brand-dark flex items-center gap-2"><i class="ph ph-shopping-cart"></i> سلة المشتريات</h2>
-            <button onclick="toggleCart()" class="text-gray-500 hover:text-red-500 bg-white rounded-full p-1 shadow-sm"><i class="ph ph-x text-xl"></i></button>
+            <button onclick="closeCart()" class="text-gray-500 hover:text-red-500 bg-white rounded-full p-1 shadow-sm"><i class="ph ph-x text-xl"></i></button>
         </div>
-        <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3" id="cart-items"></div>
+        <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3" id="cart-items">
+            <div class="text-center text-gray-400 mt-10 py-8">السلة فارغة حالياً</div>
+        </div>
         <div class="p-4 border-t border-gray-100 bg-white">
             <div class="flex justify-between items-center mb-4 text-lg font-bold">
                 <span>الإجمالي:</span>
                 <span id="cart-total" class="text-brand-dark">0 جنيه</span>
             </div>
-            <button onclick="checkout()" class="block text-center w-full bg-brand-dark text-white py-3 rounded-xl font-bold hover:bg-brand-accent transition-all duration-300 shadow-md">
+            <button onclick="goToCheckout()" class="block text-center w-full bg-brand-dark text-white py-3 rounded-xl font-bold hover:bg-brand-accent transition-all duration-300 hover:-translate-y-1 shadow-md">
                 إتمام الطلب
             </button>
         </div>
     </div>
-    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0"></div>
+    <div id="cart-overlay" onclick="closeCart()" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0"></div>
+
+    <!-- أوصاف المنتجات بتنسيق HTML (مخبأة) -->
+    <div id="hidden-product-descriptions" class="hidden">
+        <div id="product-desc-9" class="product-description-content">
+            <p class="mb-2"><span class="emoji">👗</span> <strong class="text-brand-dark">طقم عباءات مخملية فاخرة</strong></p>
+            <ul class="mb-3 text-gray-700">
+                <li><span class="emoji">✨</span> <strong class="text-gray-800">قماش مخمل فاخر ناعم الملمس</strong></li>
+                <li><span class="emoji">🎨</span> <strong class="text-gray-800">متوفر بأربعة ألوان راقية</strong></li>
+                <li><span class="emoji">👑</span> <strong class="text-gray-800">تطريز يدوي فاخر</strong></li>
+                <li><span class="emoji">📏</span> <strong class="text-gray-800">مقاسات متعددة تناسب جميع الأجسام</strong></li>
+                <li><span class="emoji">✨</span> <strong class="text-gray-800">مناسبة للسهرات والمناسبات الخاصة</strong></li>
+            </ul>
+        </div>
+    </div>
 
     <!-- ========== محتوى صفحة المنتج بالألوان ========== -->
     <main class="container mx-auto px-4 py-6 md:py-10">
@@ -283,10 +347,11 @@
     </footer>
 
     <script>
-        // ==================== دوال السلة ====================
+        // ==================== إدارة السلة ====================
         const CART_STORAGE_KEY = 'asmaaEcoCart';
         let cart = [];
 
+        // تحميل السلة من localStorage
         function loadCart() {
             try {
                 const savedCart = localStorage.getItem(CART_STORAGE_KEY);
@@ -296,55 +361,118 @@
             }
             updateCartUI();
         }
-        
+
+        // حفظ السلة
         function saveCart() {
             localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
             window.dispatchEvent(new CustomEvent('cartUpdated', { detail: cart }));
             updateCartUI();
         }
-        
+
+        // إضافة منتج إلى السلة (مع دعم الألوان)
+        function addToCart(product) {
+            // البحث عن منتج مطابق بنفس ID ونفس اللون
+            const existingItemIndex = cart.findIndex(item => 
+                item.id === product.id && 
+                item.selectedColor && product.selectedColor &&
+                item.selectedColor.name === product.selectedColor.name
+            );
+            
+            if (existingItemIndex !== -1) {
+                // إذا موجود، زود الكمية
+                cart[existingItemIndex].quantity = (cart[existingItemIndex].quantity || 1) + (product.quantity || 1);
+            } else {
+                // إذا جديد، ضيفه
+                cart.push({
+                    ...product,
+                    quantity: product.quantity || 1
+                });
+            }
+            saveCart();
+            openCart(); // فتح السلة بعد الإضافة
+        }
+
+        // إزالة منتج
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+        }
+
+        // تحديث الكمية
+        function updateQuantity(index, delta) {
+            if (index >= 0 && index < cart.length) {
+                const item = cart[index];
+                const newQuantity = (item.quantity || 1) + delta;
+                if (newQuantity <= 0) {
+                    removeFromCart(index);
+                } else {
+                    item.quantity = newQuantity;
+                    saveCart();
+                }
+            }
+        }
+
+        // حساب الإجمالي
+        function calculateTotal() {
+            return cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+        }
+
+        // تحديث واجهة السلة
         function updateCartUI() {
+            // تحديث عداد السلة
             const countBadge = document.getElementById('cart-count');
             if (countBadge) {
                 const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
                 countBadge.innerText = totalItems;
             }
-            
+
+            // تحديث محتوى السلة
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotal = document.getElementById('cart-total');
-            if (!cartItemsContainer) return;
             
+            if (!cartItemsContainer) return;
+
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<div class="text-center text-gray-400 mt-10 py-8">السلة فارغة حالياً</div>';
                 if (cartTotal) cartTotal.innerText = '0 جنيه';
                 return;
             }
-            
+
             let itemsHtml = '';
             cart.forEach((item, index) => {
+                // عرض اللون المختار إذا موجود
                 const colorIndicator = item.selectedColor ? 
-                    `<span class="inline-block w-3 h-3 rounded-full mr-1" style="background-color: ${item.selectedColor.code}; border: 1px solid #ddd;"></span>` : '';
-                
+                    `<span class="inline-flex items-center gap-1 mr-1">
+                        <span class="color-indicator" style="background-color: ${item.selectedColor.code};"></span>
+                        <span class="text-xs text-gray-500">${item.selectedColor.name}</span>
+                    </span>` : '';
+
                 itemsHtml += `
-                    <div class="cart-item bg-gray-50 p-3 rounded-lg border border-gray-100">
+                    <div class="cart-item bg-gray-50 p-3 rounded-lg border border-gray-100 hover:border-brand-light transition-all">
                         <div class="flex items-start gap-3">
-                            <div class="product-thumb overflow-hidden">
-    ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` : '<i class="ph-fill ph-package"></i>'}
-</div>
+                            <div class="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center text-brand-dark shrink-0 overflow-hidden">
+                                ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` : '<i class="ph-fill ph-package text-xl"></i>'}
+                            </div>
                             <div class="flex-1 min-w-0">
-                                <h4 class="font-bold text-gray-800 text-sm mb-1 flex items-center gap-1">
+                                <h4 class="font-bold text-gray-800 text-sm mb-1 flex items-center flex-wrap gap-1">
                                     ${item.name}
                                     ${colorIndicator}
                                 </h4>
                                 <div class="flex items-center justify-between mt-2">
                                     <div class="flex items-center gap-2">
-                                        <button onclick="updateQuantity(${index}, -1)" class="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:border-red-500 hover:text-red-500"><i class="ph ph-minus text-xs"></i></button>
+                                        <button onclick="updateQuantity(${index}, -1)" class="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:border-red-500 hover:text-red-500 transition-colors">
+                                            <i class="ph ph-minus text-xs"></i>
+                                        </button>
                                         <span class="text-sm font-bold w-5 text-center">${item.quantity || 1}</span>
-                                        <button onclick="updateQuantity(${index}, 1)" class="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:border-green-500 hover:text-green-500"><i class="ph ph-plus text-xs"></i></button>
+                                        <button onclick="updateQuantity(${index}, 1)" class="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:border-green-500 hover:text-green-500 transition-colors">
+                                            <i class="ph ph-plus text-xs"></i>
+                                        </button>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <span class="font-bold text-brand-dark">${item.price * (item.quantity || 1)} جنيه</span>
-                                        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 p-1"><i class="ph ph-trash text-base"></i></button>
+                                        <button onclick="removeFromCart(${index})" class="text-gray-400 hover:text-red-500 transition-colors p-1">
+                                            <i class="ph ph-trash text-base"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -352,72 +480,52 @@
                     </div>
                 `;
             });
+
             cartItemsContainer.innerHTML = itemsHtml;
-            if (cartTotal) cartTotal.innerText = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0) + ' جنيه';
+            if (cartTotal) cartTotal.innerText = calculateTotal() + ' جنيه';
         }
 
-        function addToCart(product) {
-            const existingItemIndex = cart.findIndex(item => 
-                item.id === product.id && 
-                JSON.stringify(item.selectedColor) === JSON.stringify(product.selectedColor)
-            );
-            
-            if (existingItemIndex !== -1) {
-                cart[existingItemIndex].quantity = (cart[existingItemIndex].quantity || 1) + product.quantity;
-            } else {
-                cart.push(product);
-            }
-            saveCart();
-            openCart();
-        }
-        
-        function removeFromCart(index) { cart.splice(index, 1); saveCart(); }
-        function updateQuantity(index, delta) {
-            if (index >= 0 && index < cart.length) {
-                const item = cart[index];
-                const newQuantity = (item.quantity || 1) + delta;
-                if (newQuantity <= 0) removeFromCart(index);
-                else { item.quantity = newQuantity; saveCart(); }
-            }
-        }
-
+        // دوال فتح/غلق السلة
         function openCart() {
             const drawer = document.getElementById('cart-drawer');
             const overlay = document.getElementById('cart-overlay');
             if (drawer && overlay) {
                 drawer.classList.remove('-translate-x-full');
+                drawer.setAttribute('aria-expanded', 'true');
                 overlay.classList.remove('hidden');
                 setTimeout(() => overlay.classList.remove('opacity-0'), 10);
                 document.body.style.overflow = 'hidden';
             }
         }
-        
+
         function closeCart() {
             const drawer = document.getElementById('cart-drawer');
             const overlay = document.getElementById('cart-overlay');
             if (drawer && overlay) {
                 drawer.classList.add('-translate-x-full');
+                drawer.setAttribute('aria-expanded', 'false');
                 overlay.classList.add('opacity-0');
                 setTimeout(() => overlay.classList.add('hidden'), 300);
                 document.body.style.overflow = '';
             }
         }
-        
+
         function toggleCart() {
             const drawer = document.getElementById('cart-drawer');
             const isOpen = drawer && !drawer.classList.contains('-translate-x-full');
             if (isOpen) closeCart(); else openCart();
         }
 
-        function checkout() {
-            if (!selectedColor) {
-                alert('الرجاء اختيار لون أولاً');
+        // الذهاب إلى صفحة الدفع
+        function goToCheckout() {
+            if (cart.length === 0) {
+                alert('السلة فارغة! أضف منتجات أولاً.');
                 return;
             }
-            window.location.href = `checkout.html?buyNowId=${currentProduct.id}&buyNowQty=${currentQuantity}&color=${encodeURIComponent(selectedColor.name)}`;
+            window.location.href = 'checkout.html';
         }
 
-        // ==================== بيانات الألوان والمنتج ====================
+        // ==================== بيانات المنتج متعدد الألوان ====================
         const colorOptions = [
             { name: 'أحمر كلاسيك', code: '#ef4444', textColor: 'أحمر' },
             { name: 'أزرق سماوي', code: '#3b82f6', textColor: 'أزرق' },
@@ -425,7 +533,6 @@
             { name: 'بنفسجي غامق', code: '#8b5cf6', textColor: 'بنفسجي' }
         ];
 
-        // منتج متعدد الألوان مع روابط صور حقيقية
         const multiColorProduct = {
             id: 9,
             name: 'طقم عباءات مخملية فاخرة',
@@ -453,7 +560,7 @@
                     'https://images.unsplash.com/photo-1624206112918-f140f087f9b5?w=400'
                 ]
             },
-            description: 'طقم عباءات فاخرة من المخمل الناعم، مناسب للسهرات والمناسبات الخاصة. تصميم أنيق ومريح مع تطريز يدوي.',
+            descriptionId: 'product-desc-9',
             rating: 4.9,
             reviews: 87,
             priceByColor: {
@@ -462,7 +569,7 @@
                 'أخضر زيتي': 450,
                 'بنفسجي غامق': 500
             },
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' // مثال فيديو يوتيوب
+            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
         };
 
         // متغيرات الحالة
@@ -484,12 +591,15 @@
             currentImageIndex = 0;
             isVideoPlaying = false;
 
+            // الحصول على وصف HTML
+            const descriptionElement = document.getElementById(currentProduct.descriptionId);
+            const descriptionHTML = descriptionElement ? descriptionElement.innerHTML : '<p>وصف المنتج غير متوفر</p>';
+
             // بناء HTML الصور المصغرة
             let thumbnailsHtml = '';
             productImages.forEach((img, index) => {
                 thumbnailsHtml += `<div class="thumbnail ${index === 0 ? 'active' : ''}" onclick="changeMainImage(${index})"><img src="${img}" alt="صورة المنتج"></div>`;
             });
-            // إضافة أيقونة الفيديو
             thumbnailsHtml += `<div class="thumbnail bg-gray-200 img-placeholder text-brand-dark" onclick="playVideo()"><i class="ph-fill ph-video text-2xl"></i></div>`;
 
             // بناء HTML اختيارات الألوان
@@ -526,7 +636,6 @@
                                 <img src="${productImages[0]}" alt="صورة المنتج" class="w-full h-full object-cover">
                             </div>
                             
-                            <!-- أزرار التنقل (تظهر فقط إذا لم يكن فيديو) -->
                             <button onclick="prevImage(event)" class="image-nav-btn prev opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${isVideoPlaying ? 'hidden' : ''}" aria-label="الصورة السابقة">
                                 <i class="ph-bold ph-caret-right"></i>
                             </button>
@@ -535,7 +644,6 @@
                             </button>
                         </div>
                         
-                        <!-- الصور المصغرة -->
                         <div class="thumbnail-container">
                             ${thumbnailsHtml}
                         </div>
@@ -551,27 +659,24 @@
 
                         <h1 class="text-3xl md:text-4xl font-black text-brand-dark mb-3">${currentProduct.name}</h1>
                         
-                        <!-- التقييم -->
                         <div class="flex items-center gap-2 mb-4">
                             <div class="text-amber-400 text-lg">${'★'.repeat(Math.floor(currentProduct.rating))}${currentProduct.rating % 1 !== 0 ? '½' : ''}</div>
                             <span class="text-gray-500 text-sm">(${currentProduct.reviews} تقييم)</span>
                         </div>
 
-                        <!-- السعر -->
                         <div class="text-3xl font-bold text-brand-accent mb-4" id="product-price">${currentPrice} جنيه</div>
 
-                        <!-- وصف المنتج -->
                         <div class="bg-brand-light/30 p-5 rounded-xl border-r-4 border-brand-dark mb-6">
                             <h2 class="text-sm font-bold text-gray-500 mb-2 flex items-center gap-1">
                                 <i class="ph-fill ph-quotes text-brand-dark"></i> عن هذا المنتج
                             </h2>
-                            <p class="text-gray-700 leading-relaxed text-base md:text-lg">${currentProduct.description}</p>
+                            <div class="text-gray-700 leading-relaxed text-base md:text-lg product-description-content">
+                                ${descriptionHTML}
+                            </div>
                         </div>
 
-                        <!-- اختيار الألوان -->
                         ${colorSelectorHtml}
 
-                        <!-- التحكم في الكمية -->
                         <div class="flex items-center gap-4 mb-6">
                             <span class="font-semibold text-gray-700">الكمية:</span>
                             <div class="flex items-center border border-gray-300 rounded-full overflow-hidden bg-white shadow-sm">
@@ -581,12 +686,11 @@
                             </div>
                         </div>
 
-                        <!-- أزرار الإجراء -->
                         <div class="flex flex-col sm:flex-row gap-3 mt-auto">
                             <button onclick="addCurrentToCart()" class="flex-1 bg-brand-dark text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-brand-accent transition-all duration-300 hover:-translate-y-1 shadow-md text-lg">
                                 <i class="ph-bold ph-shopping-cart"></i> أضف للسلة
                             </button>
-                            <button onclick="checkout()" class="flex-1 border-2 border-brand-dark text-brand-dark py-3 rounded-xl font-bold hover:bg-brand-dark hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-md text-lg">
+                            <button onclick="buyNow()" class="flex-1 border-2 border-brand-dark text-brand-dark py-3 rounded-xl font-bold hover:bg-brand-dark hover:text-white transition-all duration-300 hover:-translate-y-1 shadow-md text-lg">
                                 شراء الآن
                             </button>
                         </div>
@@ -594,7 +698,6 @@
                 </div>
             `;
             container.innerHTML = productHtml;
-
             startSlideshow();
         }
 
@@ -630,7 +733,6 @@
             const newPrice = currentProduct.priceByColor[colorName];
             document.getElementById('product-price').textContent = newPrice + ' جنيه';
             
-            // إظهار أزرار التنقل
             document.querySelectorAll('.image-nav-btn').forEach(btn => btn.classList.remove('hidden'));
             
             isUserInteracting = true;
@@ -655,7 +757,6 @@
                 else thumb.classList.remove('active');
             });
 
-            // إظهار أزرار التنقل
             document.querySelectorAll('.image-nav-btn').forEach(btn => btn.classList.remove('hidden'));
 
             isUserInteracting = true;
@@ -701,14 +802,12 @@
 
         function playVideo() {
             const mainImageDiv = document.getElementById('main-image');
-            if (!mainImageDiv) return;
+            if (!mainImageDiv || !currentProduct) return;
             
             isVideoPlaying = true;
             
-            // إخفاء أزرار التنقل
             document.querySelectorAll('.image-nav-btn').forEach(btn => btn.classList.add('hidden'));
             
-            // تشغيل الفيديو (يوتيوب)
             mainImageDiv.innerHTML = `
                 <div class="video-container">
                     <iframe src="${currentProduct.videoUrl}" 
@@ -719,7 +818,6 @@
                 </div>
             `;
             
-            // إلغاء تحديد الصور المصغرة
             document.querySelectorAll('.thumbnail').forEach(thumb => thumb.classList.remove('active'));
             
             isUserInteracting = true;
@@ -740,23 +838,40 @@
             resetSlideshow();
         }
 
-function addCurrentToCart(productId) {
-    const product = allProducts.find(p => p.id === productId);
-    if (product) {
-        addToCart({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: currentQuantity,
-            category: product.category,
-            image: product.images[0] // إضافة الصورة الأولى
-        });
-        currentQuantity = 1;
-        document.getElementById('product-quantity').innerText = '1';
-    }
-    isUserInteracting = true;
-    resetSlideshow();
-}
+        function addCurrentToCart() {
+            const currentPrice = currentProduct.priceByColor[selectedColor.name];
+            addToCart({
+                id: currentProduct.id,
+                name: currentProduct.name,
+                price: currentPrice,
+                quantity: currentQuantity,
+                category: currentProduct.category,
+                selectedColor: selectedColor,
+                image: productImages[0]
+            });
+            currentQuantity = 1;
+            document.getElementById('product-quantity').innerText = '1';
+            isUserInteracting = true;
+            resetSlideshow();
+        }
+
+        function buyNow() {
+            const currentPrice = currentProduct.priceByColor[selectedColor.name];
+            // إضافة المنتج إلى السلة أولاً
+            addToCart({
+                id: currentProduct.id,
+                name: currentProduct.name,
+                price: currentPrice,
+                quantity: currentQuantity,
+                category: currentProduct.category,
+                selectedColor: selectedColor,
+                image: productImages[0]
+            });
+            // ثم التوجيه إلى صفحة الدفع
+            setTimeout(() => {
+                window.location.href = 'checkout.html';
+            }, 300);
+        }
 
         // ==================== تهيئة الموبايل ناف ====================
         function initMobileNav() {
@@ -798,9 +913,18 @@ function addCurrentToCart(productId) {
             initMobileNav();
         });
 
-        window.addEventListener('storage', (e) => { if (e.key === CART_STORAGE_KEY) loadCart(); });
-        window.addEventListener('cartUpdated', (e) => { cart = e.detail; updateCartUI(); });
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCart(); });
+        window.addEventListener('storage', (e) => { 
+            if (e.key === CART_STORAGE_KEY) loadCart(); 
+        });
+        
+        window.addEventListener('cartUpdated', (e) => { 
+            cart = e.detail; 
+            updateCartUI(); 
+        });
+        
+        document.addEventListener('keydown', (e) => { 
+            if (e.key === 'Escape') closeCart(); 
+        });
     </script>
 </body>
 </html>

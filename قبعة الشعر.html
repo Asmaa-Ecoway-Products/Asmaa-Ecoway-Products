@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفاصيل المنتج · Asmaa Ecoway Products</title>
+    <title>تفاصيل المنتج</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -179,6 +179,26 @@
             height: 100%;
             border: none;
         }
+
+        /* تنسيقات الوصف */
+        .product-description-content {
+            line-height: 1.8;
+        }
+        .product-description-content ul {
+            list-style-type: disc;
+            padding-right: 1.5rem;
+            margin: 0.75rem 0;
+        }
+        .product-description-content li {
+            margin-bottom: 0.5rem;
+        }
+        .product-description-content .emoji {
+            font-size: 1.2em;
+            margin-left: 0.25rem;
+        }
+        .product-description-content p {
+            margin-bottom: 0.75rem;
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -198,7 +218,7 @@
             <div class="flex items-center gap-4">
                 <button onclick="openLoginModal()" class="text-gray-600 hover:text-brand-dark transition-colors flex items-center gap-1">
                     <i class="ph ph-user text-2xl"></i>
-             
+                    <span class="hidden md:inline text-sm font-semibold">حسابي</span>
                 </button>
                 <button onclick="toggleCart()" class="text-gray-600 hover:text-brand-dark relative">
                     <i class="ph ph-shopping-cart text-2xl"></i>
@@ -219,9 +239,9 @@
             <button id="close-mobile-nav" class="text-gray-500 hover:text-red-500"><i class="ph ph-x text-xl"></i></button>
         </div>
         <nav class="p-4 flex flex-col gap-4 font-semibold">
-                 <a href="/" class="text-brand-dark border-b-2 border-brand-dark pb-1">الرئيسية</a>
-                <a href="#categories" class="hover:text-brand-dark transition-colors duration-200">الأقسام</a>
-                <a href="application.html" class="hover:text-brand-dark transition-colors duration-200">انضمي لفريقنا</a>
+            <a href="index.html" class="p-2 hover:bg-gray-50 rounded">الرئيسية</a>
+            <a href="more.html" class="p-2 hover:bg-gray-50 rounded">منتجاتنا</a>
+            <a href="#" class="p-2 hover:bg-gray-50 rounded">انضمي لفريقنا</a>
         </nav>
     </aside>
 
@@ -243,6 +263,25 @@
         </div>
     </div>
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0"></div>
+
+    <!-- أوصاف المنتجات بتنسيق HTML (مخبأة) -->
+    <div id="hidden-product-descriptions" class="hidden">
+        <!-- وصف المنتج 1: غسول يومي للبشرة -->
+        <div id="product-desc-1" class="product-description-content">
+            <p class="mb-2"><span class="emoji"></span> <strong class="text-brand-dark">لو مهتمة بروتين العناية بشعرك </strong></p>
+            <ul class="mb-3 text-gray-700">
+                <li><span class="emoji"></span> <strong class="text-gray-800">قدرة استثنائية على الامتصاص: تستخدم تكنولوجيا النانو مايكروفايبر لامتصاص الرطوبة بكفاءة، مما يسرع من تجفيف الشعر.</li>
+                <li><span class="emoji"></span> <strong class="text-gray-800">كنولوجيا أيونات الفضة: الخصائص المضادة للميكروبات تساعد في تقليل الروائح ومنع نمو البكتيريا داخل النسيج.</li>
+                <li><span class="emoji"></span> <strong class="text-gray-800">لطيف على الشعر: يقلل من تكسر الشعر والتجعد بتقليل الحاجة لاستخدام الحرارة الزائدة.</li>
+                <li><span class="emoji"></span> <strong class="text-gray-800">خفيفة ومريحة: مصممة لتكون ناعمة وخفيفة، مما يضمن الراحة في كل استخدام.</li>
+                <li><span class="emoji"></span> <strong class="text-gray-800">سهلة التعديل: تتميز بنظام حلقة سهل الاستخدام لملاءمة آمنة تناسب جميع أحجام الرؤوس.</li>
+                    <li><span class="emoji"></span> <strong class="text-gray-800">اختيار مستدام: مصنوعة من مواد صديقة للبيئة، تتماشى مع التزامك بالبيئة</li>
+                        <li><span class="emoji"></span> <strong class="text-gray-800">مثالية لجميع أنواع الشعر وكثافته.</li>
+                            <li><span class="emoji"></span> <strong class="text-gray-800">للتنظيف نستخدم صابون ايكوتاتش الطبيعي ثم يترك في الهواء بعيدا عن الشمس</li>
+            </ul>
+        </div>
+
+    </div>
 
     <!-- ========== محتوى صفحة المنتج ========== -->
     <main class="container mx-auto px-4 py-6 md:py-10">
@@ -290,11 +329,13 @@
             }
             updateCartUI();
         }
+        
         function saveCart() {
             localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
             window.dispatchEvent(new CustomEvent('cartUpdated', { detail: cart }));
             updateCartUI();
         }
+        
         function addToCart(product) {
             const existingItem = cart.find(item => item.id === product.id);
             if (existingItem) {
@@ -305,7 +346,9 @@
             saveCart();
             openCart();
         }
+        
         function removeFromCart(index) { cart.splice(index, 1); saveCart(); }
+        
         function updateQuantity(index, delta) {
             if (index >= 0 && index < cart.length) {
                 const item = cart[index];
@@ -314,7 +357,9 @@
                 else { item.quantity = newQuantity; saveCart(); }
             }
         }
+        
         function calculateTotal() { return cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0); }
+        
         function updateCartUI() {
             const countBadge = document.getElementById('cart-count');
             if (countBadge) {
@@ -324,19 +369,21 @@
             const cartItemsContainer = document.getElementById('cart-items');
             const cartTotal = document.getElementById('cart-total');
             if (!cartItemsContainer) return;
+            
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<div class="text-center text-gray-400 mt-10 py-8">السلة فارغة حالياً</div>';
                 if (cartTotal) cartTotal.innerText = '0 جنيه';
                 return;
             }
+            
             let itemsHtml = '';
             cart.forEach((item, index) => {
                 itemsHtml += `
                     <div class="cart-item bg-gray-50 p-3 rounded-lg border border-gray-100">
                         <div class="flex items-start gap-3">
                             <div class="w-12 h-12 bg-white rounded-lg shadow-sm flex items-center justify-center text-brand-dark shrink-0 overflow-hidden">
-    ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` : '<i class="ph-fill ph-package text-xl"></i>'}
-</div>
+                                ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` : '<i class="ph-fill ph-package text-xl"></i>'}
+                            </div>
                             <div class="flex-1 min-w-0">
                                 <h4 class="font-bold text-gray-800 text-sm mb-1">${item.name}</h4>
                                 <div class="flex items-center justify-between mt-2">
@@ -369,6 +416,7 @@
                 document.body.style.overflow = 'hidden';
             }
         }
+        
         function closeCart() {
             const drawer = document.getElementById('cart-drawer');
             const overlay = document.getElementById('cart-overlay');
@@ -379,6 +427,7 @@
                 document.body.style.overflow = '';
             }
         }
+        
         function toggleCart() {
             const drawer = document.getElementById('cart-drawer');
             const isOpen = drawer && !drawer.classList.contains('-translate-x-full');
@@ -395,18 +444,19 @@
             }
         }
 
-        // ==================== بيانات المنتجات بصور حقيقية ====================
+        // ==================== بيانات المنتجات مع ربط أوصاف HTML ====================
         const allProducts = [
             { 
-                id: 21, 
-                name: 'الفوطة الدبل فيس للدهون والبقع ', 
-                price: 384,  
+                id: 3, 
+                name: 'قبعة شعر', 
+                price: 580, 
+                category: 'skin', 
                 images: [
-                    'prod/1.jpeg',
-                    'prod/11.jpeg',
+                    'prod/111.jpeg',
+                    'prod/1111.jpeg',
                     
                 ], 
-                description: 'الفوطة الدبل فيس للدهون والبقع، إزالة الدهون والبقع بخطوة بسيطة، مثالي لدهون المطبخ والبوتجاز والشفاط والميكروويف والحوائط وبقع المفروشات والشنط والمراتب والسجاد والكنب، عمرها سنتين وأكثر وبالماء الساخن فقط، طريقة الاستخدام: توضع في ماء ساخن ربع ساعة ثم تعصر وتستخدم، وفي حالة الدهون والحروق والبقع الصعبة يستخدم Oxi organic powder منظف طبيعي للدهون والبقع، وللتنظيف يستخدم صابون ايكوتاتش الطبيعي ثم يترك في الهواء بعيدًا عن الشمس', 
+                descriptionId: 'product-desc-1', // ربط بوصف HTML
                 rating: 4.9, 
                 reviews: 24,
                
@@ -434,6 +484,10 @@
             productImages = product.images;
             currentImageIndex = 0;
             isVideoPlaying = false;
+
+            // الحصول على وصف HTML
+            const descriptionElement = document.getElementById(product.descriptionId);
+            const descriptionHTML = descriptionElement ? descriptionElement.innerHTML : '<p>وصف المنتج غير متوفر</p>';
 
             // بناء HTML الصور المصغرة
             let thumbnailsHtml = '';
@@ -484,7 +538,9 @@
                             <h2 class="text-sm font-bold text-gray-500 mb-2 flex items-center gap-1">
                                 <i class="ph-fill ph-quotes text-brand-dark"></i> عن هذا المنتج
                             </h2>
-                            <p class="text-gray-700 leading-relaxed text-base md:text-lg">${product.description}</p>
+                            <div class="text-gray-700 leading-relaxed text-base md:text-lg product-description-content">
+                                ${descriptionHTML}
+                            </div>
                         </div>
 
                         <div class="flex items-center gap-4 mb-6">
@@ -610,23 +666,23 @@
             resetSlideshow();
         }
 
-function addCurrentToCart(productId) {
-    const product = allProducts.find(p => p.id === productId);
-    if (product) {
-        addToCart({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: currentQuantity,
-            category: product.category,
-            image: product.images[0] // إضافة الصورة الأولى
-        });
-        currentQuantity = 1;
-        document.getElementById('product-quantity').innerText = '1';
-    }
-    isUserInteracting = true;
-    resetSlideshow();
-}
+        function addCurrentToCart(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (product) {
+                addToCart({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: currentQuantity,
+                    category: product.category,
+                    image: product.images[0]
+                });
+                currentQuantity = 1;
+                document.getElementById('product-quantity').innerText = '1';
+            }
+            isUserInteracting = true;
+            resetSlideshow();
+        }
 
         // ==================== تهيئة الموبايل ناف ====================
         function initMobileNav() {
