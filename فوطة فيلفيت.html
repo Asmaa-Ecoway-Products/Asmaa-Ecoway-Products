@@ -295,7 +295,7 @@
             <div class="flex items-center gap-4">
                 <button onclick="openLoginModal()" class="text-gray-600 hover:text-brand-dark transition-colors flex items-center gap-1">
                     <i class="ph ph-user text-2xl"></i>
-                    <span class="hidden md:inline text-sm font-semibold">حسابي</span>
+                    
                 </button>
                 <button onclick="toggleCart()" class="text-gray-600 hover:text-brand-dark relative">
                     <i class="ph ph-shopping-cart text-2xl"></i>
@@ -346,13 +346,20 @@
     <!-- أوصاف المنتجات بتنسيق HTML (مخبأة) -->
     <div id="hidden-product-descriptions" class="hidden">
         <div id="product-desc-9" class="product-description-content">
-            <p class="mb-2"><span class="emoji">👗</span> <strong class="text-brand-dark">طقم عباءات مخملية فاخرة</strong></p>
-            <ul class="mb-3 text-gray-700">
-                <li><span class="emoji">✨</span> <strong class="text-gray-800">قماش مخمل فاخر ناعم الملمس</strong></li>
-                <li><span class="emoji">🎨</span> <strong class="text-gray-800">متوفر بأربعة ألوان راقية</strong></li>
-                <li><span class="emoji">👑</span> <strong class="text-gray-800">تطريز يدوي فاخر</strong></li>
-                <li><span class="emoji">📏</span> <strong class="text-gray-800">مقاسات متعددة تناسب جميع الأجسام</strong></li>
-                <li><span class="emoji">✨</span> <strong class="text-gray-800">مناسبة للسهرات والمناسبات الخاصة</strong></li>
+<p class="mb-2"><span class="emoji"></span> <strong class="text-brand-dark">ستحبين فوطة فيلفيت لأنها مثالية للعديد من الاستخدامات اليومية الضرورية؟</strong></p>
+<ul class="mb-3 text-gray-700">
+    <li><span class="emoji"></span> <strong class="text-gray-800">مثالية لتجفيف الجسم بعد الاستحمام.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">مثالية لتجفيف الشعر دون التسبب في تقصفه أو تلفه.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">للعناية اللطيفة بالبشرة بعد تنظيف الوجه.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">للاستخدام الصحي كغطاء وسادة لحماية البشرة من البكتيريا.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">لتجفيف الأطفال بعد السباحة أو على الشاطئ.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">للاستخدام في المطبخ كبديل صحي ومضاد للبكتيريا لفوط اليد التقليدية.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">نعومة فائقة وإحساس فاخر وخفيف.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">حماية ذكية مضادة للبكتيريا.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">ستصبح من أساسياتك اليومية التي لا غنى عنها.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">للتنظيف نستخدم صابون ايكوتاتش الطبيعي ثم يترك في الهواء بعيدا عن الشمس والاسطح الساخنة.</strong></li>
+</ul>
+</ul>
             </ul>
         </div>
     </div>
@@ -371,6 +378,14 @@
             <i class="ph-fill ph-plant absolute bottom-10 left-10 text-8xl text-brand-accent -rotate-12"></i>
         </div>
         <div class="container mx-auto px-4 relative z-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-10">
+                <div class="text-center sm:text-right">
+                    <a href="index.html" class="inline-flex items-center justify-center sm:justify-start gap-2 text-2xl font-bold text-brand-dark mb-4">
+                        <i class="ph-fill ph-leaf text-3xl text-brand-accent"></i><span>Asmaa Ecoway Products</span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-4 max-w-xs mx-auto sm:mx-0">متجرك الأول لكل ما يخص جمالك وعنايتك بمنزلك.</p>
+                </div>
+            </div>
             <div class="border-t border-gray-200 pt-6 mt-4 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-500">
                 <div>© 2024 متجر Asmaa Ecoway Products. جميع الحقوق محفوظة.</div>
                 <div class="flex items-center gap-1 bg-brand-light/50 px-3 py-1.5 rounded-full">
@@ -563,43 +578,34 @@
         // ==================== بيانات المنتج ====================
         // الألوان المتاحة
         const colorOptions = [
-            { name: 'أحمر كلاسيك', code: '#ef4444' },
-            { name: 'أزرق سماوي', code: '#3b82f6' },
-            { name: 'أخضر زيتي', code: '#84cc16' },
-            { name: 'بنفسجي غامق', code: '#8b5cf6' }
+            { name: 'احمر', code: '#FF3D3D' },
+            { name: 'ازرق', code: '#7FC3D8' }
+
         ];
 
         // ========== هنا أنت تتحكم في الصور ==========
         // كل صورة تحدد اسمها واللون الذي تنتمي إليه
         const productImages = [
             // صور اللون الأحمر
-            { url: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=400', color: 'أحمر كلاسيك', colorDisplay: 'أحمر' },
-            { url: 'https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=400', color: 'أحمر كلاسيك', colorDisplay: 'أحمر' },
-            { url: 'https://images.unsplash.com/photo-1603400521630-9f2de124b33b?w=400', color: 'أحمر كلاسيك', colorDisplay: 'أحمر' },
+            { url: 'prod/77777.jpeg', color: 'احمر', colorDisplay: 'احمر' },
+
+
             
             // صور اللون الأزرق
-            { url: 'https://images.unsplash.com/photo-1624206112918-f140f087f9b5?w=400', color: 'أزرق سماوي', colorDisplay: 'أزرق' },
-            { url: 'https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=400', color: 'أزرق سماوي', colorDisplay: 'أزرق' },
-            { url: 'https://images.unsplash.com/photo-1571907482469-aa5c8d5fcf54?w=400', color: 'أزرق سماوي', colorDisplay: 'أزرق' },
+            { url: 'prod/777.jpeg', color: 'ازرق', colorDisplay: 'ازرق' },
+
             
-            // صور اللون الأخضر
-            { url: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400', color: 'أخضر زيتي', colorDisplay: 'أخضر' },
-            { url: 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=400', color: 'أخضر زيتي', colorDisplay: 'أخضر' },
-            
-            // صور اللون البنفسجي
-            { url: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=400', color: 'بنفسجي غامق', colorDisplay: 'بنفسجي' },
-            { url: 'https://images.unsplash.com/photo-1571907482469-aa5c8d5fcf54?w=400', color: 'بنفسجي غامق', colorDisplay: 'بنفسجي' }
         ];
 
         // بيانات المنتج الأساسية
         const product = {
-            id: 9,
-            name: 'طقم عباءات مخملية فاخرة',
-            price: 450, // سعر موحد لجميع الألوان
+            id: 23387,
+            name: 'فوطة فيلفيت',
+            price: 520, // سعر موحد لجميع الألوان
             descriptionId: 'product-desc-9',
             rating: 4.9,
             reviews: 87,
-            videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+            
         };
 
         // متغيرات الحالة

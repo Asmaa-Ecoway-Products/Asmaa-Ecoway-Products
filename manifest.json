@@ -1,0 +1,12 @@
+{
+  "background_color": "#00ca7e",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Asma Ecoway",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "asmaa-ecoway-products",
+  "start_url": "/",
+  "theme_color": "#eceaea",
+  "id": "asmaa-ecoway-products"
+}
