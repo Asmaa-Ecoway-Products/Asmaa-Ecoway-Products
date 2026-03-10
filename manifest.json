@@ -1,12 +1,22 @@
 {
-  "background_color": "#00ca7e",
-  "dir": "ltr",
+  "name": "Asmaa Ecoway Products",
+  "short_name": "Ecoway",
+  "description": "متجرك الأول لكل ما يخص جمالك وعنايتك بمنزلك",
+  "start_url": "index.html",
   "display": "standalone",
-  "name": "Asma Ecoway",
-  "orientation": "any",
-  "scope": "/",
-  "short_name": "asmaa-ecoway-products",
-  "start_url": "/",
-  "theme_color": "#eceaea",
-  "id": "asmaa-ecoway-products"
+  "background_color": "#ffffff",
+  "theme_color": "#4CAF50",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "0.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "0.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
 }
