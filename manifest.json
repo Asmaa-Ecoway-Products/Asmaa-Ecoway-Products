@@ -15,14 +15,14 @@
   "categories": ["shopping"],
 "icons": [
   {
-    "src": "https://asmaa-ecoway-products.github.io/Asmaa-Ecoway-Products/1.png",
-    "sizes": "438x379",
+    "src": "https://asmaa-ecoway-products.github.io/Asmaa-Ecoway-Products/0.png",
+    "sizes": "192x192",
     "type": "image/png",
     "purpose": "any maskable"
   },
   {
-    "src": "https://asmaa-ecoway-products.github.io/Asmaa-Ecoway-Products/1.png",
-    "sizes": "438x379",
+    "src": "https://asmaa-ecoway-products.github.io/Asmaa-Ecoway-Products/00.png",
+    "sizes": "512x512",
     "type": "image/png",
     "purpose": "any maskable"
   }
