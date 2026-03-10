@@ -15,7 +15,7 @@
 "icons": [
   {
     "src": "https://asmaa-ecoway-products.github.io/Asmaa-Ecoway-Products/1.png",
-    "sizes": "192x192",
+    "sizes": "438x379",
     "type": "image/png",
     "purpose": "any maskable"
   },
@@ -58,7 +58,7 @@
 
     {
       "src": "https://asmaa-ecoway-products.github.io/Asmaa-Ecoway-Products/6.png",
-      "sizes": "382x854",
+      "sizes": "381x854",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "العناية بالبشرة"
