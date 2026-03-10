@@ -2,6 +2,7 @@
   "name": "Asmaa Ecoway Products",
   "short_name": "Ecoway",
   "description": "متجرك الأول لكل ما يخص جمالك وعنايتك بمنزلك",
+  "id": "https://asmaa-ecoway-products.github.io/Asmaa-Ecoway-Products/index.html",
   "start_url": "index.html",
   "scope": "/Asmaa-Ecoway-Products/",
   "display": "standalone",
@@ -21,7 +22,7 @@
   },
   {
     "src": "https://asmaa-ecoway-products.github.io/Asmaa-Ecoway-Products/1.png",
-    "sizes": "512x512",
+    "sizes": "438x379",
     "type": "image/png",
     "purpose": "any maskable"
   }
