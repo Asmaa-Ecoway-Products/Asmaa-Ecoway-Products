@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تفاصيل المنتج</title>
+    <title>طقم العلاج بالوخز - تجارب حقيقية | Asmaa Ecoway</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -15,6 +15,9 @@
     
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Swiper CSS (for testimonials carousel) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <script>
         tailwind.config = {
@@ -199,6 +202,56 @@
         .product-description-content p {
             margin-bottom: 0.75rem;
         }
+
+        /* تنسيقات قسم الشهادات */
+        .testimonial-card {
+            background: linear-gradient(145deg, #ffffff, #f9f9f9);
+            border: 1px solid rgba(45, 90, 39, 0.1);
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(45, 90, 39, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+        .testimonial-quote {
+            position: relative;
+        }
+        .testimonial-quote::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 4rem;
+            color: rgba(45, 90, 39, 0.1);
+            font-family: serif;
+        }
+        .heart-beat {
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        /* Swiper customization */
+        .swiper-pagination-bullet-active {
+            background-color: #2d5a27 !important;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #2d5a27 !important;
+            background: white;
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 1.2rem !important;
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -239,9 +292,9 @@
             <button id="close-mobile-nav" class="text-gray-500 hover:text-red-500"><i class="ph ph-x text-xl"></i></button>
         </div>
         <nav class="p-4 flex flex-col gap-4 font-semibold">
-            <a href="index.html" class="p-2 hover:bg-gray-50 rounded">الرئيسية</a>
-            <a href="more.html" class="p-2 hover:bg-gray-50 rounded">منتجاتنا</a>
-            <a href="#" class="p-2 hover:bg-gray-50 rounded">انضمي لفريقنا</a>
+                <a href="/" class="text-brand-dark border-b-2 border-brand-dark pb-1">الرئيسية</a>
+                <a href="#categories" class="hover:text-brand-dark transition-colors duration-200">الأقسام</a>
+                <a href="application.html" class="hover:text-brand-dark transition-colors duration-200">انضمي لفريقنا</a>
         </nav>
     </aside>
 
@@ -268,25 +321,143 @@
     <div id="hidden-product-descriptions" class="hidden">
         <!-- وصف المنتج 1: غسول يومي للبشرة -->
         <div id="product-desc-1" class="product-description-content">
-            <p class="mb-2"><span class="emoji"></span> <strong class="text-brand-dark">لو مهتمة بروتين العناية بشعرك </strong></p>
-            <ul class="mb-3 text-gray-700">
-                <li><span class="emoji"></span> <strong class="text-gray-800">قدرة استثنائية على الامتصاص: تستخدم تكنولوجيا النانو مايكروفايبر لامتصاص الرطوبة بكفاءة، مما يسرع من تجفيف الشعر.</li>
-                <li><span class="emoji"></span> <strong class="text-gray-800">كنولوجيا أيونات الفضة: الخصائص المضادة للميكروبات تساعد في تقليل الروائح ومنع نمو البكتيريا داخل النسيج.</li>
-                <li><span class="emoji"></span> <strong class="text-gray-800">لطيف على الشعر: يقلل من تكسر الشعر والتجعد بتقليل الحاجة لاستخدام الحرارة الزائدة.</li>
-                <li><span class="emoji"></span> <strong class="text-gray-800">خفيفة ومريحة: مصممة لتكون ناعمة وخفيفة، مما يضمن الراحة في كل استخدام.</li>
-                <li><span class="emoji"></span> <strong class="text-gray-800">سهلة التعديل: تتميز بنظام حلقة سهل الاستخدام لملاءمة آمنة تناسب جميع أحجام الرؤوس.</li>
-                    <li><span class="emoji"></span> <strong class="text-gray-800">اختيار مستدام: مصنوعة من مواد صديقة للبيئة، تتماشى مع التزامك بالبيئة</li>
-                        <li><span class="emoji"></span> <strong class="text-gray-800">مثالية لجميع أنواع الشعر وكثافته.</li>
-                            <li><span class="emoji"></span> <strong class="text-gray-800">للتنظيف نستخدم صابون ايكوتاتش الطبيعي ثم يترك في الهواء بعيدا عن الشمس</li>
-            </ul>
+<p class="mb-2"><span class="emoji"></span> <strong class="text-brand-dark">جهاز العلاج بالوخز من إيكوواي 🤩💞؟</strong></p>
+<ul class="mb-3 text-gray-700">
+    <li><span class="emoji"></span> <strong class="text-gray-800">طقم العلاج بالضغط EL-CHE يجمع بين حكمة الطب الشرقي التقليدي ودقة التصنيع العصري بخامات طبيعية صديقة للبيئة.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">يمنحك طريقة آمنة وفعّالة وعميقة للاسترخاء واستعادة توازن جسمك الطبيعي في راحة منزلك.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">✅ تنشيط الدورة الدموية: بيساعد على تحسين تدفق الدم في الجسم، وده معناه نشاط وحيوية أكتر.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">✅ تخفيف آلام الجسم: بيعالج آلام الرقبة، الظهر، المفاصل، والعضلات بطريقة طبيعية وآمنة.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">✅ تقليل التوتر والضغط العصبي: الجلسات بتدي إحساس بالاسترخاء وراحة نفسية واضحة.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">✅ تحفيز نقاط الطاقة: بيعتمد على مبدأ "الوخز الصيني" لتحفيز مراكز الطاقة وإعادة التوازن.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">✅ مناسب لكل الأعمار: آمن وسهل الاستخدام في البيت، بدون أدوية أو مواد كيميائية.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">✅ بديل طبيعي للعلاجات التقليدية: ممكن استخدامه كجزء من روتين الراحة والعناية اليومية.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">✅ خفيف وسهل الحمل: تقدري تاخديه معاك في السفر أو في أي مكان.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">✅ مناسب للحالات المزمنة والتعب العام: بيريح الجسم من الإجهاد المستمر.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">يحتوي الطقم الكامل على: حصيرة ضغط كبيرة للعلاج الشامل للجسم، وحصيرة صغيرة محمولة لتخفيف مناطق محددة مثل القدمين.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">والآن، لفترة محدودة، يمكنكِ الحصول على هذا الطقم العلاجي الفاخر لنفسك في متناول يديك.</strong></li>
+</ul>
         </div>
-
     </div>
 
     <!-- ========== محتوى صفحة المنتج ========== -->
     <main class="container mx-auto px-4 py-6 md:py-10">
-        <div id="product-details-container" class="bg-white rounded-3xl shadow-sm border border-gray-100 p-4 md:p-6">
+        <div id="product-details-container" class="bg-white rounded-3xl shadow-sm border border-gray-100 p-4 md:p-6 mb-8">
             <!-- محتوى المنتج هيتحط هنا عن طريق JavaScript -->
+        </div>
+
+        <!-- ========== قسم تجارب العملاء (الشهادات) ========== -->
+        <div class="bg-gradient-to-br from-brand-light/30 to-white rounded-3xl p-6 md:p-8 border border-brand-dark/10 shadow-lg">
+            <div class="text-center mb-8">
+                <span class="inline-block px-4 py-1 bg-brand-dark/10 text-brand-dark rounded-full text-sm font-semibold mb-3">تجارب حقيقية</span>
+                <h2 class="text-3xl md:text-4xl font-black text-brand-dark mb-2">ماذا يقول عملاؤنا عن طقم العلاج بالوخز؟</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">لحظات من الصدق والألم والأمل.. قصص حقيقية من قلوب عملائنا الذين جربواالطقم </p>
+            </div>
+
+            <!-- Swiper Container -->
+            <div class="swiper testimonialSwiper relative px-4 pb-12">
+                <div class="swiper-wrapper">
+                    
+                    <!-- الشهادة 1: تجربة الفايبروميالجيا -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card p-6 md:p-8 rounded-2xl shadow-sm h-full">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-14 h-14 rounded-full bg-brand-light flex items-center justify-center text-2xl">
+                                    <i class="ph-fill ph-heart-strap text-brand-dark text-3xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">مجهول</h3>
+                                    <div class="flex items-center gap-1 text-amber-400 text-sm">
+                                        ★ ★ ★ ★ ★
+                                        <span class="text-gray-500 mr-2">منذ شهر</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-quote text-gray-700 leading-relaxed space-y-3">
+                                <p class="text-lg font-medium text-brand-dark">
+                                <p>"بصي حبيبتي انا جربت التشي في حاجات كتير واهمها الفايبرو وعملت صفحه فيسبوك مخصصة انزل عليها التجارب فيديو من روعه وجمال الطقم بس لم يسعفني الوقت 
+بالنسبه للفايبرو الي يعرف عنها يعرف انها بكل اسف ألم في جميع عضلات الجسم حرفيا كل عضلة فيها ألم مستمر عايشة بيه وعشان كده لما جربت الطقم كنت عايزه اعرف عدد الشوكات الي فيه عشان الجسم كله 
+لان الفايبرو عايزه ضغط علي كل العضلات ونمت عليه بكامل الجسم وعالجنب ده وده وعالبطن والرجلين لاء كنت قاصدة عشان هي اكثر مكان مؤلم بالنسبالي والله يا حبيبتي من اكثر من عشر سنين اول مرة احس بجسمي جزء جزء احسن ان دي ايدي عادي كده زي الناس او دي صوابعي مثلا من غير ألم 😥
+والرجلين اقصد بيها القدم الجزء الي بنقف عليه فقط لاني كنت فارده الرجل كلها عضلات الفخد والسمانه عالمات معقول كده اه والله معقول عندي سمانه رجلي عاديه كده قادره امسكها واضغط عليها من غير وجع 😥😥
+
+طيب ليه انا هنا محطتش القدم عشان احس بالفرق حرفيا كنت حاسه بوجعها هي بس وبعدين اعدت علي كرسي واحطيت رجلي عليها عشان يكون الوخز خفيف علي بال رجلي ما تنمل شويه وبعدين وقفت عليه عادي جدا فتستحملي الوخز متقفيش مره واحده بيكون الجلد لسه مش مستعد فتحسي انك مش قادره 
+
+هتفضلي طول اليوم نشيطه قادرة تقومي اصلا من السرير ودي حاجه صعبه اوي لمرضي الفايبرو وقادره تتمشي عادي في البيت وتشوفي شغلك 
+
+بصي لو حكيت من هنا لبكره حقيقي صعب توصفي الجمال والراحة 
+
+بالنسبة للنوم عند مرضى الفايبرو مشكله المشاكل رغم باخد ماغنسيوم بلس كنت بنام عليه عالسرير صدقيني مكنتش بلحق اشيله😂😂 
+بصي من الاخر انا فضلت ادور علي احساس شبه الي حسيت بيه وقت النوم بالظبط بالظبط حقنه البنج الكامل احساس بيسري في كل جسمك بارد كده وبعدين تروحي في عالم تاني 
+
+ده حكايه صغيرة بس من حكايات الفايبرو 
+شفاكي الله وعافاكي وشفا كل من يتألم 
+
+عايزة اقولك حاجه مهمه انك فعلا جسمك هايدمن الطقم حقيقي كل يومي وتتعودي عليه فعلا وحقيقي هو اسلوب حياة من نوع مختلف"</p>
+                                <p class="font-semibold text-brand-accent">"
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الشهادة 2: تفاصيل الاستخدام والنشاط -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card p-6 md:p-8 rounded-2xl shadow-sm h-full">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-14 h-14 rounded-full bg-brand-light flex items-center justify-center text-2xl">
+                                    <i class="ph-fill ph-yoga text-brand-dark text-3xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">مجهول</h3>
+                                    <div class="flex items-center gap-1 text-amber-400 text-sm">
+                                        ★ ★ ★ ★ ★
+                                        <span class="text-gray-500 mr-2">منذ 3 أسابيع</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-quote text-gray-700 leading-relaxed space-y-3">
+                                <p>"اه ماشاء الله اللهم بارك جميل جدا أنا زوجي نادرا ما يشكر في حاجه بس كتفو وظهرو بوجعوه جامد وجربه دلوقتي لازم يوميا ينام عليه بقولي بفضل مرتاح طول النهار سبحان الله علم الإنسان مالم يعلم الحمدلله على نعمه شكرا ايكواي انك في حياتنا ودخلتي حياتنا يارب يدخل حياتنا كل ماهوا مفيد وابعد عنا جميعا كل شر ومكروه بحبكم في الله ♥️♥️"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- الشهادة 3: النوم والراحة -->
+                    <div class="swiper-slide">
+                        <div class="testimonial-card p-6 md:p-8 rounded-2xl shadow-sm h-full">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-14 h-14 rounded-full bg-brand-light flex items-center justify-center text-2xl">
+                                    <i class="ph-fill ph-bed text-brand-dark text-3xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800">مجهول</h3>
+                                    <div class="flex items-center gap-1 text-amber-400 text-sm">
+                                        ★ ★ ★ ★ ★
+                                        <span class="text-gray-500 mr-2">منذ أسبوعين</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-quote text-gray-700 leading-relaxed space-y-3">
+                                
+                                <p class="pt-2">"بصراحة طقم ال تشي للي جربه واشتراه هيبأي ليه إدمان 
+اليوم ال مش بتستخدميه بتحسي إن يومك ناقص وفي حاجة فجسمك مش مظببوطة
+حقيقي بنصح بيه وبقوة لمرضي الفايبروماليجا ومرضي الروماتويد"</p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+
+            <!-- دعوة للمشاركة -->
+            <div class="text-center mt-6">
+                <p class="text-gray-500 inline-flex items-center gap-2 bg-white px-6 py-3 rounded-full shadow-sm">
+                    <i class="ph-fill ph-chat-circle text-brand-dark text-xl"></i>
+                    شاركنا تجربتك أيضاً وألهم غيرك
+                </p>
+            </div>
         </div>
     </main>
 
@@ -314,6 +485,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script>
         // ==================== دوال السلة ====================
@@ -447,21 +621,19 @@
         // ==================== بيانات المنتجات مع ربط أوصاف HTML ====================
         const allProducts = [
             { 
-                id: 938278933, 
-                name: 'قبعة شعر', 
-                price: 580, 
+                id: 1928, 
+                name: 'طقم العلاج بالوخز', 
+                price: 6500, 
                 category: 'skin', 
                 images: [
-                    'prod/111.jpeg',
-                    'prod/1111.jpeg',
-                    
+                    'prod/23.jpeg',
+
                 ], 
                 descriptionId: 'product-desc-1', // ربط بوصف HTML
                 rating: 4.9, 
                 reviews: 24,
-               
+                videoUrl: 'https://www.youtube.com/watch?v=OFmZf9N1c5s'
             },
-
         ];
 
         // متغيرات المعرض
@@ -717,11 +889,44 @@
             }
         }
 
+        // ==================== تهيئة Swiper للشهادات ====================
+        function initTestimonialsSwiper() {
+            new Swiper('.testimonialSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                loop: true,
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1,
+                    },
+                    768: {
+                        slidesPerView: 2,
+                    },
+                    1024: {
+                        slidesPerView: 3,
+                    },
+                },
+            });
+        }
+
         // ==================== بدء التشغيل ====================
         document.addEventListener('DOMContentLoaded', () => {
             loadCart();
             displayProductDetails();
             initMobileNav();
+            initTestimonialsSwiper();
         });
 
         window.addEventListener('storage', (e) => { if (e.key === CART_STORAGE_KEY) loadCart(); });
