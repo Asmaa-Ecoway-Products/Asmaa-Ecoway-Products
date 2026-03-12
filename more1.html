@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منتجات طبيعية وصابون</title>
+    <title>منتجات العناية بالبشرة · أسماء إيكو</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -79,6 +79,7 @@
         .product-card:hover .product-image {
             transform: scale(1.02);
         }
+        /* Cart Drawer Styles */
         #cart-drawer {
             transition: transform 0.3s ease-premium;
         }
@@ -88,60 +89,38 @@
         .cart-item:hover {
             background-color: #f8faf8;
         }
-        .natural-header {
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
-        }
-        .product-card {
-            cursor: pointer;
-            position: relative;
-        }
-        .product-card a {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-        .product-image {
-            display: block;
-            width: 100%;
-        }
-        .product-card button {
-            position: relative;
-            z-index: 3;
-            cursor: pointer;
-            pointer-events: auto;
-        }
-        .product-card button:focus {
-            outline: none;
-        }
-        @media (max-width: 640px) {
-            .product-card {
-                padding: 0.75rem !important;
-            }
-        }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
 
+
+
     <!-- Header -->
     <header class="bg-white shadow-sm sticky top-0 z-40">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="index.html" class="text-2xl font-bold text-brand-dark flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-brand-accent rounded">
-                <i class="ph-fill ph-leaf text-brand-accent"></i>
-                Asmaa Ecoway Products
+            <a href="index.html" class="text-xl md:text-2xl font-bold text-brand-dark flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-brand-accent rounded">
+                <i class="ph-fill ph-leaf text-brand-accent text-2xl"></i>
+                <span class="hidden xs:inline">Asmaa Ecoway Products</span>
             </a>
             <nav class="hidden md:flex items-center gap-6 font-semibold text-gray-600">
                 <a href="/" class="text-brand-dark border-b-2 border-brand-dark pb-1">الرئيسية</a>
                 <a href="#categories" class="hover:text-brand-dark transition-colors duration-200">الأقسام</a>
                 <a href="application.html" class="hover:text-brand-dark transition-colors duration-200">انضمي لفريقنا</a>
             </nav>
-
-            <button onclick="toggleCart()" class="text-gray-600 hover:text-brand-dark relative">
-                <i class="ph ph-shopping-cart text-xl md:text-2xl"></i>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
-            </button>
-            <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-brand-dark">
-                <i class="ph ph-list text-xl md:text-2xl"></i>
-            </button>
+            <div class="flex items-center gap-2 md:gap-4">
+                <button onclick="openLoginModal()" class="text-gray-600 hover:text-brand-dark transition-colors flex items-center gap-1">
+                    <i class="ph ph-user text-xl md:text-2xl"></i>
+                    <span class="hidden md:inline text-sm font-semibold">حسابي</span>
+                </button>
+                <!-- زر السلة -->
+                <button onclick="toggleCart()" class="text-gray-600 hover:text-brand-dark relative">
+                    <i class="ph ph-shopping-cart text-xl md:text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-bold">0</span>
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-600 hover:text-brand-dark">
+                    <i class="ph ph-list text-xl md:text-2xl"></i>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -153,9 +132,12 @@
             <button id="close-mobile-nav" class="text-gray-500 hover:text-red-500"><i class="ph ph-x text-xl"></i></button>
         </div>
         <nav class="p-4 flex flex-col gap-4 font-semibold">
-                <a href="/" class="text-brand-dark border-b-2 border-brand-dark pb-1">الرئيسية</a>
-                <a href="#categories" class="hover:text-brand-dark transition-colors duration-200">الأقسام</a>
-                <a href="application.html" class="hover:text-brand-dark transition-colors duration-200">انضمي لفريقنا</a>
+            <a href="index.html" class="p-2 hover:bg-gray-50 rounded">الرئيسية</a>
+            <a href="#" class="p-2 bg-brand-light text-brand-dark rounded">الأقسام</a>
+            <a href="#" class="p-2 hover:bg-gray-50">منتجاتنا</a>
+            <a href="#" class="p-2 hover:bg-gray-50">انضمي لفريقنا</a>
+            <a href="#" class="p-2 hover:bg-gray-50">الضمان</a>
+            <a href="#" class="p-2 hover:bg-gray-50">عنا</a>
         </nav>
     </aside>
 
@@ -170,8 +152,11 @@
             </button>
         </div>
         
-        <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3" id="cart-items"></div>
+        <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3" id="cart-items">
+            <!-- المحتوى يتم إضافته عبر JavaScript -->
+        </div>
 
+        <!-- قسم الإجمالي -->
         <div class="p-4 border-t border-gray-100 bg-white">
             <div class="flex justify-between items-center mb-4 text-lg font-bold">
                 <span>الإجمالي:</span>
@@ -183,250 +168,193 @@
         </div>
     </div>
     
+    <!-- Overlay للسلة -->
     <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 opacity-0"></div>
 
     <main class="container mx-auto px-4 py-4 md:py-8">
         
         <!-- Page Header -->
         <section class="mb-6 md:mb-10">
-            <div class="natural-header rounded-2xl md:rounded-3xl p-4 md:p-10 shadow-sm border border-green-100 relative overflow-hidden">
-                <i class="ph-fill ph-leaf absolute -left-4 top-0 text-6xl md:text-8xl text-green-700 opacity-20 rotate-12"></i>
-                <i class="ph-fill ph-flower absolute right-10 bottom-0 text-6xl md:text-7xl text-green-600 opacity-20"></i>
+            <div class="bg-gradient-to-r from-brand-light via-white to-brand-light/70 rounded-2xl md:rounded-3xl p-4 md:p-10 shadow-sm border border-green-100 relative overflow-hidden">
+                <i class="ph-fill ph-sparkle absolute -left-4 top-0 text-6xl md:text-8xl text-brand-accent opacity-10 rotate-12"></i>
                 <div class="relative z-10 text-center md:text-right">
-                    <nav class="text-xs md:text-sm text-gray-600 mb-2 md:mb-3 flex justify-center md:justify-start gap-1">
+                    <nav class="text-xs md:text-sm text-gray-500 mb-2 md:mb-3 flex justify-center md:justify-start gap-1">
                         <a href="index.html" class="hover:text-brand-dark transition-colors">الرئيسية</a>
                         <span>/</span>
-                        <a href="#categories" class="hover:text-brand-dark transition-colors">الأقسام</a>
-                        <span>/</span>
-                        <span class="text-green-800 font-semibold">منتجات المنظفات الطبيعية</span>
+                        <span class="text-brand-dark font-semibold">العناية بالبشرة</span>
                     </nav>
-                    <h1 class="text-2xl md:text-5xl font-black text-green-800 mb-2 md:mb-3 tracking-tight">منتجات المنظفات الطبيعية</h1>
-                    <p class="text-gray-700 text-sm md:text-lg max-w-2xl leading-relaxed font-medium">
-                        "اختاري النظافة الطبيعية القوية… بدون كيماويات مؤذية."
-                    </p>
-                    <div class="flex flex-wrap gap-2 md:gap-3 mt-3 md:mt-4 justify-center md:justify-start">
-                        <span class="bg-white/80 text-green-800 px-3 py-1 rounded-full text-xs md:text-sm font-semibold flex items-center gap-1"><i class="ph-fill ph-check-circle text-green-600"></i> 100% طبيعي</span>
-                        <span class="bg-white/80 text-green-800 px-3 py-1 rounded-full text-xs md:text-sm font-semibold flex items-center gap-1"><i class="ph-fill ph-check-circle text-green-600"></i> خالي من المواد الحافظة</span>
-                        <span class="bg-white/80 text-green-800 px-3 py-1 rounded-full text-xs md:text-sm font-semibold flex items-center gap-1"><i class="ph-fill ph-check-circle text-green-600"></i> عضوي معتمد</span>
-                    </div>
+                    <h1 class="text-2xl md:text-5xl font-black text-brand-dark mb-2 md:mb-3 tracking-tight">منتجات تنظيف البشرة</h1>
+                    <p class="text-gray-600 text-sm md:text-lg max-w-2xl leading-relaxed">اكتشفي تشكيلتنا الفاخرة من المنظفات اللطيفة، التونر، والمقشرات الطبيعية لبشرة نضرة ومشرقة.</p>
                 </div>
             </div>
         </section>
 
         <!-- Products Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-6 auto-rows-fr">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 auto-rows-fr">
             
-            <!-- 1. صابون زيت الزيتون البلدي -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="الأوكسي بودر.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/161616.jpeg" 
-                         alt="" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/2d5a27/ffffff?text=صابون+زيتون'">
-                </a>
-                <div class="text-center flex-1 flex flex-col justify-between">
-                    <div>
-                        <a href="الأوكسي بودر.html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                            الأوكسي بودر
-                        </a>
-                        <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(87)</span></div>
-                    </div>
-                    <div class="mt-2 md:mt-3">
-                        <div class="text-lg md:text-xl font-bold text-brand-dark mb-2">220 جنيه</div>
-                        <button onclick="addToCart({id: 301, name: 'الأوكسي بودر', price: 220, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold flex items-center justify-center gap-1 md:gap-2 hover:bg-brand-accent transition-all shadow-md text-xs md:text-sm">
-                            <i class="ph-bold ph-shopping-bag"></i> أضف للسلة
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. صابون غار حلب -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="الأوكسي بودرر.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/1616161616.jpeg" 
-                         alt="الأوكسي بودر الحجم الكبير" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/8B4513/ffffff?text=صابون+غار'">
-                </a>
-                <div class="text-center">
-                    <a href="الأوكسي بودرر.html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        الأوكسي بودر الحجم الكبير
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(72)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">580 جنيه</div>
-                    <button onclick="addToCart({id: 302, name: 'الأوكسي بودر الحجم الكبير', price: 580, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <!-- 3. صابون لافندر طبيعي -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="صابون إيكو تاتش.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/17.jpeg" 
-                         alt="صابون إيكو تاتش" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/9370DB/ffffff?text=لافندر'">
-                </a>
-                <div class="text-center">
-                    <a href="صابون إيكو تاتش.html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        صابون إيكو تاتش
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(53)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">88 جنيه</div>
-                    <button onclick="addToCart({id: 303, name: 'صابون إيكو تاتش', price: 88, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <!-- 4. صابون الكركم والعسل -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="صابون الغسيل.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/1717171717.jpeg" 
-                         alt="صابون الغسيل.html" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/FFA500/000000?text=كركم+وعسل'">
-                </a>
-                <div class="text-center">
-                    <a href="صابون الغسيل.html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        صابون الغسيل
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(94)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">60 جنيه</div>
-                    <button onclick="addToCart({id: 304, name: 'صابون الغسيل.html', price: 60, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <!-- 5. صابون الحليب والشوفان -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="ECO TOUCH Tester.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/18.jpeg" 
-                         alt="ECO TOUCH Tester" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/F5F5DC/000000?text=حليب+وشوفان'">
-                </a>
-                <div class="text-center">
-                    <a href="ECO TOUCH Tester.html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        ECO TOUCH Tester
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(47)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">24 جنيه</div>
-                    <button onclick="addToCart({id: 305, name: 'ECO TOUCH Tester.html', price: 24, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <!-- 6. صابون الفحم النشط -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="مسحوق غسيل الصحون.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/1818.jpeg" 
-                         alt="مسحوق غسيل الصحون" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/000000/ffffff?text=صابون+فحم'">
-                </a>
-                <div class="text-center">
-                    <a href="مسحوق غسيل الصحون.html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        مسحوق غسيل الصحون
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(81)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">240 جنيه</div>
-                    <button onclick="addToCart({id: 306, name: 'مسحوق غسيل الصحون', price: 240, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <!-- 7. صابون الورد البلدي -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="EcoTouch Magic Paste.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/18181818.jpeg" 
-                         alt="EcoTouch Magic Paste" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/FFB6C1/000000?text=صابون+ورد'">
-                </a>
-                <div class="text-center">
-                    <a href="EcoTouch Magic Paste.html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        EcoTouch Magic Paste
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(63)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">224 جنيه</div>
-                    <button onclick="addToCart({id: 307, name: 'EcoTouch Magic Paste', price: 224, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <!-- 8. زيت جوز الهند العضوي -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="شرائح الغسيل 60.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/1818181818.jpeg" 
-                         alt="شرائح الغسيل  ٦٠ شيت" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/FFFFFF/000000?text=زيت+جوز+الهند'">
-                </a>
-                <div class="text-center">
-                    <a href="شرائح الغسيل 60" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        شرائح الغسيل  ٦٠ شيت
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(112)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">616 جنيه</div>
-                    <button onclick="addToCart({id: 308, name: 'شرائح الغسيل ٦٠ شيت', price: 616, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <!-- 9. زيت اللوز الحلو -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="شرائح الغسيل 30.html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/181818181818.jpeg" 
-                         alt="شرائح الغسيل ٣٠ شيت " 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/F4A460/000000?text=زيت+لوز'">
-                </a>
-                <div class="text-center">
-                    <a href="شرائح الغسيل 30.html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        شرائح الغسيل ٣٠ شيت 
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(68)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">364 جنيه</div>
-                    <button onclick="addToCart({id: 309, name: 'شرائح الغسيل ٣٠ شيت ', price: 364, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-
-            <!-- 10. زيت الأرغان المغربي -->
-            <div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
-                <a href="الواح الغسيل ( ٣ شيتات ).html" class="product-image aspect-square rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
-                    <img src="prod/19.jpeg" 
-                         alt="الواح الغسيل ( ٣ شيتات )" 
-                         class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
-                         onerror="this.src='https://via.placeholder.com/300x300/DAA520/000000?text=زيت+أرغان'">
-                </a>
-                <div class="text-center">
-                    <a href="الواح الغسيل ( ٣ شيتات ).html" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
-                        الواح الغسيل ( ٣ شيتات )
-                    </a>
-                    <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(95)</span></div>
-                    <div class="text-lg md:text-xl font-bold text-brand-dark my-2">40 جنيه</div>
-                    <button onclick="addToCart({id: 310, name: 'الواح الغسيل ( ٣ شيتات )', price: 40, category: 'natural'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
-                        أضف للسلة
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- زر العودة -->
-        <div class="text-center mt-10">
-            <a href="index.html#categories" class="inline-flex items-center gap-2 bg-white border-2 border-brand-dark text-brand-dark px-8 py-3 rounded-full font-bold hover:bg-brand-dark hover:text-white transition-all duration-300 shadow-md">
-                <i class="ph-bold ph-arrow-right"></i>
-                العودة للأقسام الرئيسية
+           <!-- منتج 1 - غسول يومي -->
+<div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
+    <a href="product.html?id=1" class="product-image h-32 md:h-40 rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
+        <img src="images/products/face-wash.jpg" 
+             alt="غسول يومي للبشرة" 
+             class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+             onerror="this.src='https://via.placeholder.com/300x300/2d5a27/ffffff?text=غسول+يومي'">
+    </a>
+    <div class="text-center flex-1 flex flex-col justify-between">
+        <div>
+            <a href="product.html?id=1" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
+                غسول يومي للبشرة
             </a>
+            <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(24)</span></div>
+        </div>
+        <div class="mt-2 md:mt-3">
+            <div class="text-lg md:text-xl font-bold text-brand-dark mb-2">85 جنيه</div>
+            <button onclick="addToCart({id: 1, name: 'غسول يومي للبشرة', price: 85, category: 'skin'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold flex items-center justify-center gap-1 md:gap-2 hover:bg-brand-accent transition-all shadow-md text-xs md:text-sm">
+                <i class="ph-bold ph-shopping-bag"></i> أضف للسلة
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- منتج 2 - تونر ورد -->
+<div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
+    <a href="product.html?id=2" class="product-image h-32 md:h-40 rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
+        <img src="images/products/rose-toner.jpg" 
+             alt="تونر مهدئ بالورد" 
+             class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+             onerror="this.src='https://via.placeholder.com/300x300/d4af37/ffffff?text=تونر+ورد'">
+    </a>
+    <div class="text-center">
+        <a href="product.html?id=2" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
+            تونر مهدئ بالورد
+        </a>
+        <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(18)</span></div>
+        <div class="text-lg md:text-xl font-bold text-brand-dark my-2">110 جنيه</div>
+        <button onclick="addToCart({id: 2, name: 'تونر مهدئ بالورد', price: 110, category: 'skin'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
+            أضف للسلة
+        </button>
+    </div>
+</div>
+
+<!-- منتج 3 - مقشر قهوة -->
+<div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
+    <a href="product.html?id=3" class="product-image h-32 md:h-40 rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
+        <img src="images/products/coffee-scrub.jpg" 
+             alt="مقشر بالقهوة والسكر" 
+             class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+             onerror="this.src='https://via.placeholder.com/300x300/8B4513/ffffff?text=مقشر+قهوة'">
+    </a>
+    <div class="text-center">
+        <a href="product.html?id=3" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
+            مقشر بالقهوة والسكر
+        </a>
+        <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(32)</span></div>
+        <div class="text-lg md:text-xl font-bold text-brand-dark my-2">135 جنيه</div>
+        <button onclick="addToCart({id: 3, name: 'مقشر بالقهوة والسكر', price: 135, category: 'skin'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
+            أضف للسلة
+        </button>
+    </div>
+</div>
+
+<!-- منتج 4 - مرطب خفيف -->
+<div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
+    <a href="product.html?id=4" class="product-image h-32 md:h-40 rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
+        <img src="images/products/moisturizer.jpg" 
+             alt="مرطب خفيف للوجه" 
+             class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+             onerror="this.src='https://via.placeholder.com/300x300/87CEEB/ffffff?text=مرطب'">
+    </a>
+    <div class="text-center">
+        <a href="product.html?id=4" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
+            مرطب خفيف للوجه
+        </a>
+        <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(15)</span></div>
+        <div class="text-lg md:text-xl font-bold text-brand-dark my-2">95 جنيه</div>
+        <button onclick="addToCart({id: 4, name: 'مرطب خفيف للوجه', price: 95, category: 'skin'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
+            أضف للسلة
+        </button>
+    </div>
+</div>
+
+<!-- منتج 5 - ماء ميسيلار -->
+<div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
+    <a href="product.html?id=5" class="product-image h-32 md:h-40 rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
+        <img src="images/products/micellar-water.jpg" 
+             alt="ماء ميسيلار منظف" 
+             class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+             onerror="this.src='https://via.placeholder.com/300x300/4c8c4a/ffffff?text=ماء+ميسيلار'">
+    </a>
+    <div class="text-center">
+        <a href="product.html?id=5" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
+            ماء ميسيلار منظف
+        </a>
+        <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(41)</span></div>
+        <div class="text-lg md:text-xl font-bold text-brand-dark my-2">75 جنيه</div>
+        <button onclick="addToCart({id: 5, name: 'ماء ميسيلار منظف', price: 75, category: 'skin'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
+            أضف للسلة
+        </button>
+    </div>
+</div>
+
+<!-- منتج 6 - ماسك طين -->
+<div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
+    <a href="product.html?id=6" class="product-image h-32 md:h-40 rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
+        <img src="images/products/clay-mask.jpg" 
+             alt="ماسك تنقية بالطين" 
+             class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+             onerror="this.src='https://via.placeholder.com/300x300/8B4513/ffffff?text=ماسك+طين'">
+    </a>
+    <div class="text-center">
+        <a href="product.html?id=6" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
+            ماسك تنقية بالطين
+        </a>
+        <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(22)</span></div>
+        <div class="text-lg md:text-xl font-bold text-brand-dark my-2">120 جنيه</div>
+        <button onclick="addToCart({id: 6, name: 'ماسك تنقية بالطين', price: 120, category: 'skin'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
+            أضف للسلة
+        </button>
+    </div>
+</div>
+
+<!-- منتج 7 - صابون زيت زيتون -->
+<div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
+    <a href="product.html?id=7" class="product-image h-32 md:h-40 rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
+        <img src="images/products/olive-soap.jpg" 
+             alt="صابون زيت الزيتون" 
+             class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+             onerror="this.src='https://via.placeholder.com/300x300/2d5a27/ffffff?text=صابون+زيتون'">
+    </a>
+    <div class="text-center">
+        <a href="product.html?id=7" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
+            صابون زيت الزيتون
+        </a>
+        <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(57)</span></div>
+        <div class="text-lg md:text-xl font-bold text-brand-dark my-2">45 جنيه</div>
+        <button onclick="addToCart({id: 7, name: 'صابون زيت الزيتون', price: 45, category: 'home'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
+            أضف للسلة
+        </button>
+    </div>
+</div>
+
+<!-- منتج 8 - سيروم فيتامين سي -->
+<div class="product-card bg-white rounded-xl md:rounded-2xl p-3 md:p-4 border border-gray-100 shadow-sm flex flex-col h-full">
+    <a href="product.html?id=8" class="product-image h-32 md:h-40 rounded-lg md:rounded-xl mb-3 block overflow-hidden bg-gray-100">
+        <img src="images/products/vitamin-c-serum.jpg" 
+             alt="سيروم فيتامين سي" 
+             class="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+             onerror="this.src='https://via.placeholder.com/300x300/FFA500/ffffff?text=فيتامين+C'">
+    </a>
+    <div class="text-center">
+        <a href="product.html?id=8" class="font-bold text-gray-800 hover:text-brand-accent transition-colors text-sm md:text-base block">
+            سيروم فيتامين سي
+        </a>
+        <div class="text-amber-400 text-xs md:text-sm mt-1">⭐⭐⭐⭐ <span class="text-gray-500 text-xs">(12)</span></div>
+        <div class="text-lg md:text-xl font-bold text-brand-dark my-2">210 جنيه</div>
+        <button onclick="addToCart({id: 8, name: 'سيروم فيتامين سي', price: 210, category: 'skin'})" class="w-full bg-brand-dark text-white py-2 md:py-2.5 rounded-lg md:rounded-xl font-bold hover:bg-brand-accent transition-all text-xs md:text-sm">
+            أضف للسلة
+        </button>
+    </div>
+</div>
         </div>
     </main>
 
@@ -650,9 +578,12 @@
             }
         }
 
-        function checkout() {
-            window.location.href = 'checkout.html';
-        }
+function checkout() {
+
+    
+    // التوجيه إلى صفحة إتمام الطلب
+    window.location.href = 'checkout.html';
+}
 
         // الاستماع لتغييرات السلة
         window.addEventListener('storage', (e) => {
@@ -716,6 +647,7 @@
                 closeCart();
             }
         });
+
     </script>
 </body>
 </html>
