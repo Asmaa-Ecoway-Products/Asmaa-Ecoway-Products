@@ -268,14 +268,13 @@
     <div id="hidden-product-descriptions" class="hidden">
         <!-- وصف المنتج 1: غسول يومي للبشرة -->
         <div id="product-desc-1" class="product-description-content">
-<p class="mb-2"><span class="emoji"></span> <strong class="text-brand-dark">الإفتتاحية: لوز | قلب العطر: ياسمين سامباك، تيوبروز كريستال؟</strong></p>
+<p class="mb-2"><span class="emoji"></span> <strong class="text-brand-dark">الإفتتاحية: الحليب الدافئ، كريمة الفانيليا الطازجة، لمسة برتقال خفيفة؟</strong></p>
 <ul class="mb-3 text-gray-700">
-    <li><span class="emoji"></span> <strong class="text-gray-800">الإفتتاحية (Top Notes): لوز.</strong></li>
-    <li><span class="emoji"></span> <strong class="text-gray-800">قلب العطر (Middle Notes): ياسمين سامباك، تيوبروز كريستال.</strong></li>
-    <li><span class="emoji"></span> <strong class="text-gray-800">المكونات الأساسية (Base Notes): ياسمين، تيوبروز، فول التونكا.</strong></li>
-    <li><span class="emoji"></span> <strong class="text-gray-800">النمط: زهري شرقي — جريء وساحر.</strong></li>
-    <li><span class="emoji"></span> <strong class="text-gray-800">النوع: نسائي.</strong></li>
-    <li><span class="emoji"></span> <strong class="text-gray-800">الحجم: ٥٠ مل.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">الإفتتاحية (Top Notes): الحليب الدافئ، كريمة الفانيليا الطازجة، لمسة برتقال خفيفة.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">قلب العطر (Middle Notes): الكراميل الذهبي، العسل الطبيعي، جوز الهند الكريمي.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">المكونات الأساسية (Base Notes): فانيليا بوربون، مسك دافئ، العنبر.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">النوع: للجنسين.</strong></li>
+    <li><span class="emoji"></span> <strong class="text-gray-800">الحجم: ٣ مل.</strong></li>
 </ul>
         </div>
 
@@ -485,12 +484,12 @@
         // ==================== بيانات المنتجات مع ربط أوصاف HTML ====================
         const allProducts = [
             { 
-                id: 924345, 
+                id: 9243415, 
                 name: 'عطر لاتيه بسكويت', 
-                price: 900, 
+                price: 96, 
                 category: 'skin', 
                 images: [
-                    'prod/101010.jpeg',
+                    'prod/26.jpeg',
 
                 ], 
                 descriptionId: 'product-desc-1', // ربط بوصف HTML
@@ -765,5 +764,22 @@
         window.addEventListener('cartUpdated', (e) => { cart = e.detail; updateCartUI(); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCart(); });
     </script>
+    <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '967161839144616');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </body>
 </html>

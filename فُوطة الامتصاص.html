@@ -560,14 +560,14 @@
         // ==================== بيانات المنتج مع الألوان ====================
         // الألوان المتاحة (منت جرين، رمادي فاتح)
         const colorOptions = [
-            { name: 'منت جرين', code: '#3A7D44' },   // Mint Green
+            { name: 'منت جرين', code: '#87D7E2' },   // Mint Green
             { name: 'رمادي فاتح', code: '#D3D3D3' }  // Light Gray
         ];
 
         // صور المنتج مع تحديد اللون لكل صورة (نفس الصورة للونين)
         const productImages = [
             { url: 'prod/44444444.jpeg', color: 'منت جرين' },
-            { url: 'prod/44444444.jpeg', color: 'رمادي فاتح' }
+            { url: 'prod/25.jpeg', color: 'رمادي فاتح' }
         ];
 
         // بيانات المنتج الأساسية
@@ -955,5 +955,23 @@
         window.addEventListener('cartUpdated', (e) => { cart = e.detail; updateCartUI(); });
         document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCart(); });
     </script>
+
+    <!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '967161839144616');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </body>
 </html>
