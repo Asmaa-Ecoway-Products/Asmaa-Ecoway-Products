@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -18,11 +18,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '967161839144616');
+fbq('init', '1663822478053887');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
+src="https://www.facebook.com/tr?id=1663822478053887&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
     
@@ -34,8 +34,14 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     
+    <!-- Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- EmailJS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Unified Cart -->
+    <script src="cart.js"></script>
 
     <script>
         tailwind.config = {
@@ -471,11 +477,55 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
     <script>
         // ==================== تهيئة EmailJS ====================
         (function() {
-            emailjs.init("nLesbo4gJmJCtNjRS"); // Public Key
+            emailjs.init("nLesbo4gJmJCtNjRS");
         })();
 
+        // ==================== تهيئة Supabase ====================
+        const supabaseCheckout = window.supabase.createClient(
+            'https://oybviqlrlsprjrhjftvs.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95YnZpcWxybHNwcmpyaGpmdHZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5ODgyMzAsImV4cCI6MjA5MjU2NDIzMH0.rPDNAZe9DNTi3eQd3L_lnLrEgQ8g8uwr6GAWhnydVIc'
+        );
+
+        // دالة التحقق من المخزون قبل إتمام الطلب
+        async function checkStockAvailability() {
+            const outOfStockItems = [];
+            for (const item of cart) {
+                const baseId = item.productId || item.id.split('_')[0];
+                const { data, error } = await supabaseCheckout
+                    .from('products')
+                    .select('stock, name, description')
+                    .eq('id', baseId)
+                    .single();
+                
+                if (data) {
+                    let availableStock = data.stock !== null ? data.stock : 999;
+                    let displayName = data.name;
+                    
+                    if (item.selectedColor) {
+                        const desc = data.description || '';
+                        const parts = desc.split('===COLOR_VARIATIONS_JSON===');
+                        if (parts.length > 1) {
+                            try {
+                                const variations = JSON.parse(parts[1].trim());
+                                const v = variations.find(x => x.name === item.selectedColor.name);
+                                if (v) {
+                                    availableStock = v.stock !== undefined ? v.stock : 999;
+                                    displayName = `${data.name} (اللون: ${item.selectedColor.name})`;
+                                }
+                            } catch(e) {}
+                        }
+                    }
+                    
+                    if (availableStock < (item.quantity || 1)) {
+                        outOfStockItems.push({ name: displayName, available: availableStock, requested: item.quantity || 1 });
+                    }
+                }
+            }
+            return outOfStockItems;
+        }
+
         // ==================== Cart Management ====================
-        const CART_STORAGE_KEY = 'asmaaEcoCart';
+        // The cart is managed globally by window.CartSystem
         let cart = [];
 
         // Shipping data
@@ -493,77 +543,21 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
         let selectedShippingPrice = 0;
 
         function loadCart() {
-            try {
-                const savedCart = localStorage.getItem(CART_STORAGE_KEY);
-                cart = savedCart ? JSON.parse(savedCart) : [];
-            } catch (e) {
-                cart = [];
+            if (window.CartSystem) {
+                cart = window.CartSystem.items;
+                updateOrderSummary();
+            } else {
+                setTimeout(loadCart, 100);
             }
-            updateCartUI();
+        }
+
+        window.addEventListener('cartUpdated', (e) => {
+            cart = e.detail;
             updateOrderSummary();
-        }
-
-        function saveCart() {
-            localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
-            window.dispatchEvent(new CustomEvent('cartUpdated', { detail: cart }));
-            updateCartUI();
-            updateOrderSummary();
-        }
-
-        function updateCartUI() {
-            const countBadge = document.getElementById('cart-count');
-            if (countBadge) {
-                const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-                countBadge.innerText = totalItems;
-            }
-
-            const cartItemsContainer = document.getElementById('cart-items');
-            const cartTotal = document.getElementById('cart-total');
-            
-            if (!cartItemsContainer) return;
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<div class="text-center text-gray-400 mt-10 py-8">السلة فارغة حالياً</div>';
-                if (cartTotal) cartTotal.innerText = '0 جنيه';
-                return;
-            }
-
-            let itemsHtml = '';
-            cart.forEach((item, index) => {
-                // عرض اللون المختار إذا موجود
-                const colorIndicator = item.selectedColor ? 
-                    `<span class="inline-flex items-center gap-1 mr-1">
-                        <span class="color-indicator" style="background-color: ${item.selectedColor.code};"></span>
-                        <span class="text-xs text-gray-500">${item.selectedColor.name}</span>
-                    </span>` : '';
-
-                itemsHtml += `
-                    <div class="cart-item bg-gray-50 p-3 rounded-lg border border-gray-100 mb-2">
-                        <div class="flex items-start gap-3">
-                            <div class="product-thumb overflow-hidden">
-                                ${item.image ? `<img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">` : '<i class="ph-fill ph-package"></i>'}
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <h4 class="font-bold text-gray-800 text-sm mb-1 flex items-center flex-wrap gap-1">
-                                    ${item.name}
-                                    ${colorIndicator}
-                                </h4>
-                                <div class="flex items-center justify-between mt-2">
-                                    <span class="text-xs text-gray-500">الكمية: ${item.quantity || 1}</span>
-                                    <span class="font-bold text-brand-dark">${(item.price * (item.quantity || 1)).toFixed(2)} جنيه</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            cartItemsContainer.innerHTML = itemsHtml;
-            if (cartTotal) cartTotal.innerText = calculateTotal() + ' جنيه';
-        }
+        });
 
         function calculateTotal() {
-            return cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+            return window.CartSystem ? window.CartSystem.getTotal() : 0;
         }
 
         // تحديث ملخص الطلب في صفحة الدفع مع عرض الألوان
@@ -698,7 +692,7 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
         }
 
         // ==================== Place Order with EmailJS ====================
-        function placeOrder(event) {
+        async function placeOrder(event) {
             event.preventDefault();
             
             // التحقق من السلة
@@ -711,6 +705,22 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
             if (selectedShippingPrice === 0) {
                 alert('الرجاء اختيار المحافظة');
                 return;
+            }
+
+            // التحقق من المخزون قبل إتمام الطلب
+            try {
+                const outOfStock = await checkStockAvailability();
+                if (outOfStock.length > 0) {
+                    let msg = '⚠️ عذراً، المنتجات التالية غير متوفرة بالكمية المطلوبة:\n\n';
+                    outOfStock.forEach(item => {
+                        msg += `• ${item.name}: طلبت ${item.requested} قطعة، المتوفر ${item.available} فقط\n`;
+                    });
+                    msg += '\nالرجاء تعديل الكميات والمحاولة مرة أخرى.';
+                    alert(msg);
+                    return;
+                }
+            } catch(e) {
+                console.warn('تعذر التحقق من المخزون:', e);
             }
 
             // جمع بيانات النموذج
@@ -808,7 +818,7 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
 
             // إرسال الإيميل عبر EmailJS
             emailjs.send('service_d6kjesk', 'template_4adtl9t', emailParams)
-                .then(function(response) {
+                .then(async function(response) {
                     console.log('Success:', response);
                     
                     // إيقاف مؤشر التحميل
@@ -817,16 +827,60 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
                     loadingText.innerText = 'تم استلام طلبك بنجاح!';
                     successIcon.style.display = 'flex';
                     
+                    // الاحتفاظ بنسخة من المنتجات قبل تصفير السلة
+                    const orderedProducts = window.CartSystem ? [...window.CartSystem.items] : [...cart];
+                    
                     // مسح السلة
-                    cart = [];
-                    saveCart();
+                    if (window.CartSystem) {
+                        window.CartSystem.items = [];
+                        window.CartSystem.save();
+                    }
+                    
+                    // خصم المخزون من قاعدة البيانات
+                    if (window.supabase) {
+                        try {
+                            const sb = window.supabase.createClient('https://oybviqlrlsprjrhjftvs.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95YnZpcWxybHNwcmpyaGpmdHZzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY5ODgyMzAsImV4cCI6MjA5MjU2NDIzMH0.rPDNAZe9DNTi3eQd3L_lnLrEgQ8g8uwr6GAWhnydVIc');
+                            for (const item of orderedProducts) {
+                                const baseId = item.productId || item.id.split('_')[0];
+                                if (baseId && baseId !== '99') {
+                                    if (item.selectedColor) {
+                                        // Product with variations
+                                        const { data } = await sb.from('products').select('stock, description').eq('id', baseId).single();
+                                        if (data) {
+                                            const desc = data.description || '';
+                                            const parts = desc.split('===COLOR_VARIATIONS_JSON===');
+                                            if (parts.length > 1) {
+                                                try {
+                                                    const variations = JSON.parse(parts[1].trim());
+                                                    const v = variations.find(x => x.name === item.selectedColor.name);
+                                                    if (v) {
+                                                        v.stock = Math.max(0, v.stock - (item.quantity || 1));
+                                                        const newOverallStock = Math.max(0, (data.stock || 0) - (item.quantity || 1));
+                                                        const newDesc = `${parts[0].trim()}\n\n===COLOR_VARIATIONS_JSON===\n${JSON.stringify(variations)}`;
+                                                        await sb.from('products').update({ stock: newOverallStock, description: newDesc }).eq('id', baseId);
+                                                    }
+                                                } catch(err) { console.error(err); }
+                                            }
+                                        }
+                                    } else {
+                                        // Standard product
+                                        const { data } = await sb.from('products').select('stock').eq('id', baseId).single();
+                                        if (data && data.stock !== null) {
+                                            const newStock = Math.max(0, data.stock - (item.quantity || 1));
+                                            await sb.from('products').update({ stock: newStock }).eq('id', baseId);
+                                        }
+                                    }
+                                }
+                            }
+                        } catch(e) { console.error('Error updating stock', e); }
+                    }
                     
                     // تخزين بيانات الطلب في localStorage لصفحة النجاح
                     localStorage.setItem('lastOrder', JSON.stringify({
                         ...formData,
                         orderId: emailParams.order_id,
                         date: emailParams.order_date,
-                        products: cart,
+                        products: orderedProducts,
                         subtotal: subtotal,
                         shipping: selectedShippingPrice,
                         total: total
@@ -864,45 +918,10 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
                 });
         }
 
-        // ==================== Cart Drawer Functions ====================
-        function openCart() {
-            const drawer = document.getElementById('cart-drawer');
-            const overlay = document.getElementById('cart-overlay');
-            
-            if (drawer && overlay) {
-                drawer.classList.remove('-translate-x-full');
-                drawer.setAttribute('aria-expanded', 'true');
-                overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeCart() {
-            const drawer = document.getElementById('cart-drawer');
-            const overlay = document.getElementById('cart-overlay');
-            
-            if (drawer && overlay) {
-                drawer.classList.add('-translate-x-full');
-                drawer.setAttribute('aria-expanded', 'false');
-                overlay.classList.add('opacity-0');
-                setTimeout(() => {
-                    overlay.classList.add('hidden');
-                }, 300);
-                document.body.style.overflow = '';
-            }
-        }
-
-        function toggleCart() {
-            const drawer = document.getElementById('cart-drawer');
-            const isOpen = drawer && !drawer.classList.contains('-translate-x-full');
-            
-            if (isOpen) {
-                closeCart();
-            } else {
-                openCart();
-            }
-        }
+        // ==================== Cart Drawer Functions (Delegated to cart.js) ====================
+        function openCart() { if(window.CartSystem) window.CartSystem.openDrawer(); }
+        function closeCart() { if(window.CartSystem) window.CartSystem.closeDrawer(); }
+        function toggleCart() { if(window.CartSystem) window.CartSystem.toggleDrawer(); }
 
         // ==================== Initialize ====================
         document.addEventListener('DOMContentLoaded', () => {
@@ -917,18 +936,7 @@ src="https://www.facebook.com/tr?id=967161839144616&ev=PageView&noscript=1"
             });
         });
 
-        // Listen for cart updates
-        window.addEventListener('storage', (e) => {
-            if (e.key === CART_STORAGE_KEY) {
-                loadCart();
-            }
-        });
-
-        window.addEventListener('cartUpdated', (e) => {
-            cart = e.detail;
-            updateCartUI();
-            updateOrderSummary();
-        });
+        // Handled by window event listener defined above.
     </script>
 
     <!-- Meta Pixel Code -->
@@ -941,11 +949,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '905565595577443');
+fbq('init', '1663822478053887');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=905565595577443&ev=PageView&noscript=1"
+src="https://www.facebook.com/tr?id=1663822478053887&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
   <!-- Meta Pixel Code -->

@@ -1,13 +1,17 @@
 self.addEventListener('install', e => {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.open('ecoway-v1').then(cache =>
-      cache.addAll(['index.html'])
-    )
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.map(key => caches.delete(key))
+      );
+    }).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', e => {
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request))
-  );
+  e.respondWith(fetch(e.request));
 });
